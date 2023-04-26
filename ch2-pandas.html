@@ -1,0 +1,2536 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Pandas ile Veri Analizi ve İşleme &#8212; Veri Analizi için Python Kütüphaneleri</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch2-pandas';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Görsel Veri Analizine Giriş" href="ch3-matplotlib.html" />
+    <link rel="prev" title="NumPy ile Çok Boyutlu Diziler" href="ch1-numpy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Veri Analizi için Python Kütüphaneleri
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ch1-numpy.html">NumPy ile Çok Boyutlu Diziler</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pandas ile Veri Analizi ve İşleme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch3-matplotlib.html">Görsel Veri Analizine Giriş</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/canererden/veri-madenciligi-python" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/canererden/veri-madenciligi-python/issues/new?title=Issue%20on%20page%20%2Fch2-pandas.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/ch2-pandas.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Pandas ile Veri Analizi ve İşleme</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-kutuphanesi">pandas Kütüphanesi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nasil-yuklenir">Nasıl yüklenir?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-kullanim-alanlari">pandas kullanım alanları</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-yapilari">Veri Yapıları</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seriler-series">Seriler (Series)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-cerceveleri-dataframes">Veri Çerçeveleri (DataFrames)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-cercevesi-olusturma-yontemleri">Veri çerçevesi oluşturma yöntemleri</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indeksler-index">Indeksler (Index)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-giris-cikis-islemleri">Veri Giriş / Çıkış İşlemleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verilerin-okunmasi">Verilerin Okunması</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#online-kaynaktan-veri-okunmasi">Online kaynaktan veri okunması</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verilerin-kaydedilmesi">Verilerin Kaydedilmesi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-veri-tipleri">pandas Veri Tipleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veriler-arasindaki-donusumler">Veriler arasındaki dönüşümler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-seti-uzerinde-islemler">Veri Seti Üzerinde İşlemler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksik-veri-islemleri">Eksik veri işlemleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#none-ve-nan-veri-tipleri"><code class="docutils literal notranslate"><span class="pre">None</span></code> ve <code class="docutils literal notranslate"><span class="pre">NaN</span></code> veri tipleri</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isnull-isna-notnull-notna-fonksiyonlari"><code class="docutils literal notranslate"><span class="pre">isnull()</span></code>, <code class="docutils literal notranslate"><span class="pre">isna()</span></code>, <code class="docutils literal notranslate"><span class="pre">notnull()</span></code>, <code class="docutils literal notranslate"><span class="pre">notna()</span></code> fonksiyonları</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fillna"><code class="docutils literal notranslate"><span class="pre">fillna()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropna"><code class="docutils literal notranslate"><span class="pre">dropna()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aykiri-veri-analizi">Aykırı veri analizi</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#iqr-yontemi">IQR yöntemi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#z-skoru-yontemi">Z-Skoru yöntemi</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-donusum-islemleri">Veri dönüşüm işlemleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizasyon">Normalizasyon</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#standardizasyon">Standardizasyon</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kesikli-hale-getirme">Kesikli hale getirme</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding">One-hot encoding</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formul-uygulama">Formül Uygulama</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-secme-ve-verilere-ulasma">Veri Seçme ve Verilere Ulaşma</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iloc">iloc</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loc">loc</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sonuc">Sonuç</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pandas-ile-veri-analizi-ve-isleme">
+<h1>Pandas ile Veri Analizi ve İşleme<a class="headerlink" href="#pandas-ile-veri-analizi-ve-isleme" title="Permalink to this headline">#</a></h1>
+<p>Bu bölümde, temel pandas veri yapılarını oluşturmadan verileri pandas ile analiz etmeye kadar, pandas’ın veri işleme ve analizi alanındaki yeteneklerini uygulama örnekleri ve pratik egzersizlerle göstererek size yardımcı olacak bir kısa bir kurs olarak verilmiştir. Bu bölümün sonunda, veri okuma ve yazma, veri çerçeveleri birleştirme, veri ön işleme, veri görselleştirme vb. temel deneyimleri kazanmış olacaksınız. Daha sonraki bölümlerinde daha ayrıntılı bir şekilde ele alacağımız kütüphanenin çoğu temel özelliklerini bu bölümde belirteceğiz.</p>
+<p>Python Pandas kütüphanesi, veri analizi ve işleme için kullanılan açık kaynaklı bir kütüphanedir. Bu kütüphane, veri manipülasyonu, filtreleme, görselleştirme ve veri analizi gibi birçok işlemi kolaylaştırır. Python programlama dilinde Pandas kütüphanesi kullanarak veri analizi yapmak oldukça kolaydır.</p>
+<p>Bu yazıda, Python Pandas kütüphanesi hakkında genel bir bilgi edineceğiz ve kütüphane ile nasıl veri analizi yapabileceğimizi öğreneceğiz.</p>
+<section id="pandas-kutuphanesi">
+<h2>pandas Kütüphanesi<a class="headerlink" href="#pandas-kutuphanesi" title="Permalink to this headline">#</a></h2>
+<p>Pandas, Python programlama dilinde veri analizi için kullanılan bir kütüphanedir. Veri manipülasyonu, veri filtreleme, veri birleştirme, veri işleme, veri analizi ve veri görselleştirme gibi birçok işlemi yapmamıza yardımcı olur. Pandas, verileri düzenlemek, analiz etmek ve modellemek için yaygın olarak kullanılan bir araçtır.</p>
+<p>Pandas kütüphanesi, iki temel veri yapıları olan DataFrame ve Series sınıflarına dayanmaktadır. DataFrame, iki boyutlu bir veri yapısıdır ve sütunlar ve satırlar şeklinde organize edilir. Series, bir boyutlu bir veri yapısıdır ve sadece bir sütun içerir.</p>
+<section id="nasil-yuklenir">
+<h3>Nasıl yüklenir?<a class="headerlink" href="#nasil-yuklenir" title="Permalink to this headline">#</a></h3>
+<p>Pandas kütüphanesi, Python programlama dilinin bir varsayılan kütüphanesi değildir ve sonradan yüklenmesi gerekmektedir. Pandas kütüphanesini yüklemek için aşağıdaki komutu kullanabilirsiniz:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandas</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">__version__</span>  <span class="c1"># pandas versiyonu: &#39;1.3.4&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;1.3.4&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pandas-kullanim-alanlari">
+<h3>pandas kullanım alanları<a class="headerlink" href="#pandas-kullanim-alanlari" title="Permalink to this headline">#</a></h3>
+<p>Pandas, Python programlama dilinde yüksek performanslı ve kullanımı kolay veri analizi ve manipülasyonu kütüphanesidir. Pandas, özellikle tablo benzeri yapıdaki veriler üzerinde çalışmak için tasarlanmıştır ve sütun ve satırların adlandırılmasına ve indekslenmesine izin verir. Pandas ayrıca, veri okuma ve yazma işlemleri için de birçok araç sağlar.</p>
+<p>Pandas kütüphanesi ile yapılabilecek işlemler şu şekilde özetlenebilir:</p>
+<ul class="simple">
+<li><p>Veri Okuma ve Yazma</p></li>
+<li><p>Veri Seçme ve Sıralama</p></li>
+<li><p>Veri Dönüştürme ve Temizleme</p></li>
+<li><p>Veri Gruplama ve Birleştirm</p></li>
+<li><p>Zaman Serisi Analizi</p></li>
+<li><p>Veri Görselleştirme</p></li>
+<li><p>Veri Modelleme ve Karşılaştırma</p></li>
+</ul>
+</section>
+</section>
+<section id="veri-yapilari">
+<h2>Veri Yapıları<a class="headerlink" href="#veri-yapilari" title="Permalink to this headline">#</a></h2>
+<p>Pandas kütüphanesi, üç temel veri yapısı olan DataFrame, İndeks ve Series sınıflarına dayanmaktadır: Seriler (Series), Indeksler (Indexes) ve Veri Çerçeveleri (DataFrames).</p>
+<section id="seriler-series">
+<h3>Seriler (Series)<a class="headerlink" href="#seriler-series" title="Permalink to this headline">#</a></h3>
+<p>Seriler, tek boyutlu bir veri yapısıdır ve birbirinden farklı veri tiplerini içerebilirler. Seriler, indeks ve değerlerden oluşur. Indeksler varsayılan olarak 0’dan başlayan tam sayılar olarak atanabilir veya belirtilen etiketleri kullanarak özelleştirilebilirler.</p>
+<p>Seriler, bir boyutlu bir veri yapısıdır ve sadece bir sütun içerir. Seriler, bir liste, dizi veya sözlük gibi bir veri yapısından oluşturulabilir. Seriler aslında veri çerçevesinin sütununu temsil eder.</p>
+<p>Aşağıdaki örnekte, bir Seriler nesnesi oluşturulup nesne üzerinde işlemler gösterilmiştir. Örnekler Jupyter Notebook üzerinde gerçekleştirilmiştir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">veriler</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">seri_ornegi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">veriler</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_ornegi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1
+1    2
+2    5
+3    8
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bu kod parçacığı aşağıdaki gibi bir görüntü oluşturacaktır.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://bit.ly/3KL6j74" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 1 - Serilerin ekrana yazdırılması</p></td>
+</tr>
+</tbody>
+</table>
+<p>Aşağıdaki kod parçacıklarında Seriler hakkında çeşitli metotlara örnekler verilmiştir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">seri_ornegi</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>  <span class="c1"># int64</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_ornegi</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>  <span class="c1"># [1 2 5 8]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_ornegi</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># seri_ornegi</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_ornegi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (4,)</span>
+
+<span class="n">seri_ornegi2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;seri_ornegi&#39;</span><span class="p">)</span>  <span class="c1"># indeks değerlerinin değiştirilmesi</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_ornegi2</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>  <span class="c1"># Index([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], dtype=&#39;object&#39;)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_ornegi</span><span class="p">[</span><span class="n">seri_ornegi</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># 2den büyük veriler</span>
+
+<span class="n">sayilar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sayilar</span><span class="p">)</span>  <span class="c1"># [ 0.   2.5  5.   7.5 10. ]</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sayilar</span><span class="p">)</span>  <span class="c1"># indeksler [0, 1, 2, 3, 4]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sayilar</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># indekslere göre toplama yapılır.</span>
+
+<span class="c1"># numpy da iki diziyi toplayınca</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>int64
+[1 2 5 8]
+None
+(4,)
+Index([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], dtype=&#39;object&#39;)
+2    5
+3    8
+dtype: int64
+[ 0.   2.5  5.   7.5 10. ]
+0     NaN
+1     2.5
+2     7.5
+3    12.5
+4    17.5
+5     NaN
+dtype: float64
+[0 1 2]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="ow">in</span> <span class="n">seri_ornegi</span><span class="p">)</span>  <span class="c1"># seri örneğinde 2 değeri var mı?</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="ow">in</span> <span class="n">seri_ornegi</span><span class="p">)</span>  <span class="c1"># False</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+False
+</pre></div>
+</div>
+</div>
+</div>
+<p>Görüldüğü gibi Seriler tek boyutlu veri yapılarını temsil etmektedir. İki veya daha fazla boyuttaki veri tipleri ile ilgili ise Veri Çerçeveleri kullanılmaktadır.</p>
+</section>
+<section id="veri-cerceveleri-dataframes">
+<h3>Veri Çerçeveleri (DataFrames)<a class="headerlink" href="#veri-cerceveleri-dataframes" title="Permalink to this headline">#</a></h3>
+<p>Veri Çerçeveleri, iki boyutlu bir veri yapısıdır ve birden çok Seriden oluşur. Veri Çerçeveleri, sütunlara ve satırlara göre indekslenir ve her sütun bir Seri nesnesi temsil eder. Her sütun farklı bir veri türüne sahip olabilir. Veri Çerçeveleri, birçok veri kaynağından okunabilir ve birçok farklı şekilde dönüştürülebilir.</p>
+<p>DataFrame, iki boyutlu bir veri yapısıdır ve sütunlar ve satırlar şeklinde organize edilir. DataFrame, tablo benzeri bir yapıya sahiptir ve her sütun bir Series nesnesidir. DataFrame’in her bir satırı, bir gözlem veya bir veri noktasını temsil eder. DataFrame, verileri işlemek ve manipüle etmek için birçok yöntem sağlar.</p>
+<p>Aşağıdaki örnekte, “isim”, “yas” ve “sehir” sütunları olan bir DataFrame nesnesi oluşturur.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Veri çerçevesi yardımı</span>
+pd.DataFrame<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/x59RBD.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;isim&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ahmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Mehmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Ali&#39;</span><span class="p">,</span> <span class="s1">&#39;Ayşe&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;yas&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
+        <span class="s1">&#39;sehir&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;İstanbul&#39;</span><span class="p">,</span> <span class="s1">&#39;Ankara&#39;</span><span class="p">,</span> <span class="s1">&#39;İzmir&#39;</span><span class="p">,</span> <span class="s1">&#39;Bursa&#39;</span><span class="p">]}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>isim</th>
+      <th>yas</th>
+      <th>sehir</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Ahmet</td>
+      <td>28</td>
+      <td>İstanbul</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mehmet</td>
+      <td>22</td>
+      <td>Ankara</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Ali</td>
+      <td>30</td>
+      <td>İzmir</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Ayşe</td>
+      <td>25</td>
+      <td>Bursa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://bit.ly/3ooucda" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 2 - Veri Çerçevesi Yazdırma</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="veri-cercevesi-olusturma-yontemleri">
+<h3>Veri çerçevesi oluşturma yöntemleri<a class="headerlink" href="#veri-cercevesi-olusturma-yontemleri" title="Permalink to this headline">#</a></h3>
+<p>Veri Çerçevelerini oluşturmak için yukarıdaki örnekte olduğu gibi tüm veriler listeler içerisine yazılabilir. Bununla birlikte birkaç yöntemden daha bahsetmemiz gerekirse aşağıdaki yöntemleri söyleyebiliriz.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Veri Çerçevesi oluşturma 1. yöntem</span>
+<span class="n">veri_cercevesi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                              <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Sütun 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Sütun 2&#39;</span><span class="p">],</span>
+                              <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">veri_cercevesi</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sütun 1</th>
+      <th>Sütun 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>0.324009</td>
+      <td>0.316621</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>0.345527</td>
+      <td>0.987390</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>0.893757</td>
+      <td>0.003427</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<img src="https://i.vgy.me/teSi3C.png">
+Veri çerçevesi oluşturmada 2. yöntem olarak Python veri tiplerinden `sözlükler (dictionary)` kullanılabilir. Sözlükler key:value tiplerinden oluşur.<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plakalar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;istanbul&#39;</span><span class="p">:</span><span class="s1">&#39;34&#39;</span><span class="p">,</span><span class="s1">&#39;sakarya&#39;</span><span class="p">:</span><span class="s1">&#39;54&#39;</span><span class="p">,</span><span class="s1">&#39;kmaraş&#39;</span><span class="p">:</span><span class="s1">&#39;46&#39;</span><span class="p">}</span>
+<span class="n">nufus_sayilari</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;istanbul&#39;</span><span class="p">:</span><span class="mi">20000000</span><span class="p">,</span><span class="s1">&#39;sakarya&#39;</span><span class="p">:</span><span class="mi">1000000</span><span class="p">,</span><span class="s1">&#39;kmaraş&#39;</span><span class="p">:</span><span class="mi">900000</span><span class="p">}</span>
+<span class="n">sehirler</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;plaka kodları&#39;</span><span class="p">:</span><span class="n">plakalar</span><span class="p">,</span><span class="s1">&#39;nufuslar&#39;</span><span class="p">:</span><span class="n">nufus_sayilari</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sehirler</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>         plaka kodları  nufuslar
+istanbul            34  20000000
+sakarya             54   1000000
+kmaraş              46    900000
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/enUSA1.png">
+Eğer index ve sütun değerleri eşleşirse toplama gerçekleşir. Bu durumda `sehirler + sehirler` komutu aşağıdaki çıktıyı verir.<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sehirler</span> <span class="o">+</span> <span class="n">sehirler</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>plaka kodları</th>
+      <th>nufuslar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>istanbul</th>
+      <td>3434</td>
+      <td>40000000</td>
+    </tr>
+    <tr>
+      <th>sakarya</th>
+      <td>5454</td>
+      <td>2000000</td>
+    </tr>
+    <tr>
+      <th>kmaraş</th>
+      <td>4646</td>
+      <td>1800000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://bit.ly/3L8HLGh" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 3 - İndekslere göre toplama</p></td>
+</tr>
+</tbody>
+</table>
+<p>sehirler iki boyutlu bir veri yapısına sahiptir. Bu veri yapısı Numpy nesnesine dönüştürülebilir. Bunun için kullanılması gereken komut <code class="docutils literal notranslate"><span class="pre">to_numpy</span></code> komutudur.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sehirler</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="c1"># Index([&#39;plaka kodları&#39;, &#39;nufuslar&#39;], dtype=&#39;object&#39;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sehirler</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sehirler</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">sehirler_numpy</span> <span class="o">=</span> <span class="n">sehirler</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;plaka kodları&#39;, &#39;nufuslar&#39;], dtype=&#39;object&#39;)
+[[&#39;34&#39; 20000000]
+ [&#39;54&#39; 1000000]
+ [&#39;46&#39; 900000]]
+[[&#39;34&#39; 20000000]
+ [&#39;54&#39; 1000000]
+ [&#39;46&#39; 900000]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Veri Çerçevesi oluşturmanın üçüncü yöntemi de liste fonksiyonları kullanmaktır. Bu duruma örnek aşağıdaki kod parçacıklarında verilmiştir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">veri_listesi</span> <span class="o">=</span> <span class="p">[(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span> <span class="c1"># list comprehensions</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">veri_listesi</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;karesi&#39;</span><span class="p">,</span> <span class="s1">&#39;kubu&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n</th>
+      <th>karesi</th>
+      <th>kubu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>4</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>9</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>16</td>
+      <td>64</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://bit.ly/3MSc0CN" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 4 - Listeler ile Veri Çerçevesi</p></td>
+</tr>
+</tbody>
+</table>
+<p>Son olarak Veri Çerçeveleri <code class="docutils literal notranslate"><span class="pre">random</span></code> modülü ile oluşturulabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rassal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.929616
+1    0.316376
+2    0.183919
+3    0.204560
+4    0.567725
+Name: rassal, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/aSl1Tz.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">disari_cikma</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;rassal&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+        <span class="s1">&#39;hava durumu&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sicak&#39;</span><span class="p">,</span> <span class="s1">&#39;ilik&#39;</span><span class="p">,</span> <span class="s1">&#39;soguk&#39;</span><span class="p">,</span> <span class="s1">&#39;yagmurlu&#39;</span><span class="p">,</span> <span class="s1">&#39;karli&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;karar&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;Dışarı Çık&#39;</span><span class="p">,</span> <span class="s1">&#39;Dışarı Çıkma&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+    <span class="p">},</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;1/1/2018&#39;</span><span class="p">,</span>
+                        <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;1D&#39;</span><span class="p">,</span>
+                        <span class="n">periods</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tarih&#39;</span><span class="p">))</span>
+
+<span class="n">disari_cikma</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rassal</th>
+      <th>hava durumu</th>
+      <th>karar</th>
+    </tr>
+    <tr>
+      <th>tarih</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018-01-01</th>
+      <td>0.929616</td>
+      <td>sicak</td>
+      <td>Dışarı Çıkma</td>
+    </tr>
+    <tr>
+      <th>2018-01-02</th>
+      <td>0.316376</td>
+      <td>ilik</td>
+      <td>Dışarı Çıkma</td>
+    </tr>
+    <tr>
+      <th>2018-01-03</th>
+      <td>0.183919</td>
+      <td>soguk</td>
+      <td>Dışarı Çık</td>
+    </tr>
+    <tr>
+      <th>2018-01-04</th>
+      <td>0.204560</td>
+      <td>yagmurlu</td>
+      <td>Dışarı Çıkma</td>
+    </tr>
+    <tr>
+      <th>2018-01-05</th>
+      <td>0.567725</td>
+      <td>karli</td>
+      <td>Dışarı Çıkma</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Bu kod parçacığının çıktısı aşağıdaki ekran görüntüsünde verilmiştir.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://bit.ly/3KJqr9K" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 5 - random oluşturulan Veri Çerçevesi</p></td>
+</tr>
+</tbody>
+</table>
+<p>Veri Çerçevesindeki herhangi bir sütuna ulaşmak için iki yöntem kullanılabilir. Birincisinde köşeli parantez içerisinde sütun ismi verilir. Bu durumda sütun isminde boşluk gibi durumların olması çağırmayı etkilemez. İkinci yöntem olan nokta kullanımında ise boşluk gibi özel karakterlerin kullanılması mümkün değildir. Bu kullanımlara örnekler aşağıda verilmiştir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">disari_cikma</span><span class="p">[</span><span class="s2">&quot;karar&quot;</span><span class="p">])</span> <span class="c1"># dışarı çıkma kararı series oldu</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">disari_cikma</span><span class="o">.</span><span class="n">karar</span><span class="p">)</span><span class="c1"># yukarıdaki ile aynı kullanıma sahiptir.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tarih
+2018-01-01    Dışarı Çıkma
+2018-01-02    Dışarı Çıkma
+2018-01-03      Dışarı Çık
+2018-01-04    Dışarı Çıkma
+2018-01-05    Dışarı Çıkma
+Freq: D, Name: karar, dtype: object
+tarih
+2018-01-01    Dışarı Çıkma
+2018-01-02    Dışarı Çıkma
+2018-01-03      Dışarı Çık
+2018-01-04    Dışarı Çıkma
+2018-01-05    Dışarı Çıkma
+Freq: D, Name: karar, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/Gs5Tvv.png"></section>
+<section id="indeksler-index">
+<h3>Indeksler (Index)<a class="headerlink" href="#indeksler-index" title="Permalink to this headline">#</a></h3>
+<p>Pandas Serilerini numpy tek boyutlu dizilerden ayıran nokta indeks değerleridir. Indeks veri tipi sayesinde satır kayıtlarına etiketler ile ulaşılabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indexler</span> <span class="o">=</span> <span class="n">seri_ornegi</span><span class="o">.</span><span class="n">index</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">indexler</span><span class="p">)</span> <span class="c1"># Index([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], dtype=&#39;object&#39;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">indexler</span><span class="p">))</span> <span class="c1"># &lt;class &#39;pandas.core.indexes.base.Index&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">indexler</span><span class="o">.</span><span class="n">is_unique</span><span class="p">)</span> <span class="c1"># indeksler tekil verilerden mi oluşuyor mu? True</span>
+
+<span class="c1"># indeksler: Değiştirilemez listelerdir.</span>
+
+<span class="n">indeks_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">indeks_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">indeks_1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">indeks_2</span><span class="p">))</span> <span class="c1"># Kesişim: Int64Index([3, 4], dtype=&#39;int64&#39;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">indeks_1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">indeks_2</span><span class="p">))</span> <span class="c1"># Birleşim Int64Index([1, 2, 3, 4, 5], dtype=&#39;int64&#39;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">indeks_2</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">indeks_1</span><span class="p">))</span> <span class="c1"># Fark Int64Index([5], dtype=&#39;int64&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=4, step=1)
+&lt;class &#39;pandas.core.indexes.range.RangeIndex&#39;&gt;
+True
+Int64Index([3, 4], dtype=&#39;int64&#39;)
+Int64Index([1, 2, 3, 4, 5], dtype=&#39;int64&#39;)
+Int64Index([5], dtype=&#39;int64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="veri-giris-cikis-islemleri">
+<h2>Veri Giriş / Çıkış İşlemleri<a class="headerlink" href="#veri-giris-cikis-islemleri" title="Permalink to this headline">#</a></h2>
+<p>Pandas ile işlem yaparken çoğu kez farklı kaynak dosyalarından veri alma ve çıktıları farklı formatlarda yazmak gerekecektir. Bu işlemler, veri ile çalışırken vazgeçilmez işlemlerdir. Aşağıdaki komutlar ile, farklı dosya tipleri ile işlemler gerçekleştirilebilir.</p>
+<ul class="simple">
+<li><p>text dosyası <code class="docutils literal notranslate"><span class="pre">genfromtxt</span></code></p></li>
+<li><p>csv dosyası <code class="docutils literal notranslate"><span class="pre">read_csv</span></code></p></li>
+<li><p>Excel dosyası <code class="docutils literal notranslate"><span class="pre">read_excel</span></code></p></li>
+<li><p>json dosyası <code class="docutils literal notranslate"><span class="pre">read_json()</span></code></p></li>
+<li><p>Veritabanından <code class="docutils literal notranslate"><span class="pre">read_sql()</span></code></p></li>
+</ul>
+<section id="verilerin-okunmasi">
+<h3>Verilerin Okunması<a class="headerlink" href="#verilerin-okunmasi" title="Permalink to this headline">#</a></h3>
+<p>Burada bir uygulama üzerinde veri giriş çıkış ve kayıt işlemleri gerçekleştirilecektir. Uygulama için <a class="reference external" href="https://figshare.com/ndownloader/files/40286887">bu adreste</a> yer alan veri seti kullanılacaktır.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CSV dosyasının okunması</span>
+<span class="n">calisan_verileri</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://figshare.com/ndownloader/files/40286887&quot;</span><span class="p">,</span>
+                               <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                               <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+                               <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                               <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Start Date</th>
+      <th>Last Login Time</th>
+      <th>Salary</th>
+      <th>Bonus %</th>
+      <th>Senior Management</th>
+      <th>Team</th>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Male</th>
+      <td>8/6/1993</td>
+      <td>12:42 PM</td>
+      <td>97308</td>
+      <td>6.945</td>
+      <td>True</td>
+      <td>Marketing</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>3/31/1996</td>
+      <td>6:53 AM</td>
+      <td>61933</td>
+      <td>4.170</td>
+      <td>True</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Female</th>
+      <td>4/23/1993</td>
+      <td>11:17 AM</td>
+      <td>130590</td>
+      <td>11.858</td>
+      <td>False</td>
+      <td>Finance</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>3/4/2005</td>
+      <td>1:00 PM</td>
+      <td>138705</td>
+      <td>9.340</td>
+      <td>True</td>
+      <td>Finance</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>1/24/1998</td>
+      <td>4:47 PM</td>
+      <td>101004</td>
+      <td>1.389</td>
+      <td>True</td>
+      <td>Client Services</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>NaN</th>
+      <td>11/23/2014</td>
+      <td>6:09 AM</td>
+      <td>132483</td>
+      <td>16.655</td>
+      <td>False</td>
+      <td>Distribution</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>1/31/1984</td>
+      <td>6:30 AM</td>
+      <td>42392</td>
+      <td>19.675</td>
+      <td>False</td>
+      <td>Finance</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>5/20/2013</td>
+      <td>12:39 PM</td>
+      <td>96914</td>
+      <td>1.421</td>
+      <td>False</td>
+      <td>Product</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>4/20/2013</td>
+      <td>4:45 PM</td>
+      <td>60500</td>
+      <td>11.985</td>
+      <td>False</td>
+      <td>Business Development</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>5/15/2012</td>
+      <td>6:24 PM</td>
+      <td>129949</td>
+      <td>10.169</td>
+      <td>True</td>
+      <td>Sales</td>
+    </tr>
+  </tbody>
+</table>
+<p>1000 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>Pandas içerisindeki önemli fonksiyonlardan birisi <code class="docutils literal notranslate"><span class="pre">read_csv</span></code>fonksiyonudur. Bu fonksiyon CSV dosyalarını pandas DataFrame veri yapısına dönüştürmek için kullanılır. Bu yöntem aşağıdaki parametrelerle çağrılabilir:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">filepath_or_buffer</span></code>: Okunacak CSV dosyasının yolu ya da URL’si.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sep</span></code>: Dosya içerisindeki sütunları ayırmak için kullanılacak ayırıcı karakteri belirtir. Varsayılan ayırıcı virgüldür.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delimiter</span></code>: Dosya içerisindeki sütunları ayırmak için kullanılacak ayırıcı karakteri belirtir. sep parametresiyle aynı işlevi görür.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">header</span></code>: Başlık satırının (sütun adları) var olup olmadığını belirtir. Varsayılan değer infer ile, ilk satırdaki değerlere göre otomatik olarak belirlenir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index_col</span></code>: Veri setinde hangi sütunun index olarak kullanılacağını belirtir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">usecols</span></code>: Hangi sütunların alınacağını belirtir. Varsayılan olarak tüm sütunlar alınır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype</span></code>: Sütunların veri tiplerini belirtir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">skiprows</span></code>: Dosyadaki belirtilen satır sayısı kadar okunmadan atlanır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">skipfooter</span></code>: Dosyanın sonundan belirtilen satır sayısı kadar okunmadan atlanır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nrows</span></code>: Okunacak maksimum satır sayısını belirtir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">na_values</span></code>: Boş veya eksik verilerin nasıl işleneceğini belirtir. Varsayılan olarak, herhangi bir boş veya eksik veri NAN olarak belirlenir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">encoding</span></code>: Dosyanın karakter kodlamasını belirtir.</p></li>
+</ul>
+</section>
+<section id="online-kaynaktan-veri-okunmasi">
+<h3>Online kaynaktan veri okunması<a class="headerlink" href="#online-kaynaktan-veri-okunmasi" title="Permalink to this headline">#</a></h3>
+<p>Pandas, web sayfalarından veya online kaynaklardan veri okumak için birkaç farklı yöntem sunar. Bunlar arasında <code class="docutils literal notranslate"><span class="pre">read_html()</span></code>, <code class="docutils literal notranslate"><span class="pre">read_json()</span></code>, <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> ve <code class="docutils literal notranslate"><span class="pre">read_excel()</span></code> gibi popüler yöntemler yer alır. Bu yöntemler, farklı dosya türlerini veya veri kaynaklarını okumak için kullanılabilirler.</p>
+<p>Aşağıdaki örnekte, bir web sayfasından veri okunur ve DataFrame nesnesi olarak döndürülür:</p>
+<img src="https://i.vgy.me/BvgiGg.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Web sayfasındaki tablo verisini okuma</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)&#39;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># İlk tabloyu alalım</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># DataFrame&#39;i göster</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country / Area</th>
+      <th>UN continentalregion[4]</th>
+      <th>UN statisticalsubregion[4]</th>
+      <th>Population(1 July 2022)</th>
+      <th>Population(1 April 2023)</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>India</td>
+      <td>Asia</td>
+      <td>Southern Asia</td>
+      <td>1417173173</td>
+      <td>1428627663</td>
+      <td>+0.81%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>China[a]</td>
+      <td>Asia</td>
+      <td>Eastern Asia</td>
+      <td>1425887337</td>
+      <td>1425671352</td>
+      <td>−0.02%</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>United States</td>
+      <td>Americas</td>
+      <td>Northern America</td>
+      <td>338289857</td>
+      <td>339996564</td>
+      <td>+0.50%</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Indonesia</td>
+      <td>Asia</td>
+      <td>South-eastern Asia</td>
+      <td>275501339</td>
+      <td>277534123</td>
+      <td>+0.74%</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Pakistan</td>
+      <td>Asia</td>
+      <td>Southern Asia</td>
+      <td>235824863</td>
+      <td>240485658</td>
+      <td>+1.98%</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<img src="https://i.vgy.me/7pf3dY.png">
+<p>Bu örnekte, <code class="docutils literal notranslate"><span class="pre">pd.read_html()</span></code> yöntemi, bir URL’yi parametre olarak alır ve bu URL’deki sayfada yer alan tüm tabloları içeren bir liste döndürür. Bizim örneğimizde, birinci tabloyu seçtik ve bir DataFrame nesnesi olarak döndürdük. Sonuç olarak, df değişkeni, web sayfasındaki ilk tabloyu içeren bir DataFrame nesnesi olarak oluşturuldu.</p>
+<p>Ayrıca, <code class="docutils literal notranslate"><span class="pre">pd.read_json()</span></code> gibi diğer yöntemler de benzer şekilde kullanılabilir. Bu yöntemler, farklı veri türleri için özelleştirilmiş seçenekler ve parametreler sunarlar.</p>
+</section>
+<section id="verilerin-kaydedilmesi">
+<h3>Verilerin Kaydedilmesi<a class="headerlink" href="#verilerin-kaydedilmesi" title="Permalink to this headline">#</a></h3>
+<p>pandas kütüphanesi, farklı dosya biçimleri için çeşitli yazdırma metotları sunar. Bazı örnekler aşağıdaki gibidir:</p>
+<p>to_csv: Bu metot, verileri bir CSV dosyasına yazdırmak için kullanılır.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DataFrame&#39;i bir CSV dosyasına yazdır</span>
+<span class="n">calisan_verileri</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;calisan_verileri.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bu örnekte, <code class="docutils literal notranslate"><span class="pre">to_csv()</span></code> metodu kullanılarak bu veriler calisan_verileri.csv dosyasına yazdırılır. index=False parametresi, verilerin index sütununu dahil etmemeyi sağlar.</p>
+<p>to_csv() yöntemi, verileri CSV dosyasına yazarken belirli bir klasöre kaydetmek için <code class="docutils literal notranslate"><span class="pre">path_or_buf</span></code> parametresini kullanır. Bu parametreye tam bir dosya yolu veya dosya adı verilebilir. Ayrıca, alt dizinleri de dahil ederek farklı klasörlere kaydetmek için dosya yolu belirtirken dizin adı da kullanılabilir.</p>
+<ul class="simple">
+<li><p>normal şekilde kayıt</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;./data/calisan_verileri.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_14604</span><span class="o">/</span><span class="mf">25051184.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">calisan_verileri</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;./data/calisan_verileri.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nn">D:\Anaconda3\lib\site-packages\pandas\core\generic.py</span> in <span class="ni">to_csv</span><span class="nt">(self, path_or_buf, sep, na_rep, float_format, columns, header, index, index_label, mode, encoding, compression, quoting, quotechar, line_terminator, chunksize, date_format, doublequote, escapechar, decimal, errors, storage_options)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3464</span>         <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3465</span> 
+<span class="ne">-&gt; </span><span class="mi">3466</span>         <span class="k">return</span> <span class="n">DataFrameRenderer</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3467</span>             <span class="n">path_or_buf</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3468</span>             <span class="n">line_terminator</span><span class="o">=</span><span class="n">line_terminator</span><span class="p">,</span>
+
+<span class="nn">D:\Anaconda3\lib\site-packages\pandas\io\formats\format.py</span> in <span class="ni">to_csv</span><span class="nt">(self, path_or_buf, encoding, sep, columns, index_label, mode, compression, quoting, quotechar, line_terminator, chunksize, date_format, doublequote, escapechar, errors, storage_options)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1103</span>             <span class="n">formatter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fmt</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1104</span>         <span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1105</span>         <span class="n">csv_formatter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1106</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1107</span>         <span class="k">if</span> <span class="n">created_buffer</span><span class="p">:</span>
+
+<span class="nn">D:\Anaconda3\lib\site-packages\pandas\io\formats\csvs.py</span> in <span class="ni">save</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">236</span><span class="s2">         # apply compression and byte/text conversion</span>
+<span class="ne">--&gt; </span><span class="mi">237</span><span class="s2">         with get_handle(</span>
+<span class="g g-Whitespace">    </span><span class="mi">238</span><span class="s2">             self.filepath_or_buffer,</span>
+<span class="g g-Whitespace">    </span><span class="mi">239</span><span class="s2">             self.mode,</span>
+
+<span class="nn">D:\Anaconda3\lib\site-packages\pandas\io\common.py</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">700</span><span class="s2">         if ioargs.encoding and &quot;b&quot; not in ioargs.mode:</span>
+<span class="g g-Whitespace">    </span><span class="mi">701</span><span class="s2">             # Encoding</span>
+<span class="ne">--&gt; </span><span class="mi">702</span><span class="s2">             handle = open(</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span><span class="s2">                 handle,</span>
+<span class="g g-Whitespace">    </span><span class="mi">704</span><span class="s2">                 ioargs.mode,</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;./data/calisan_verileri.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bu örnekte, ./data yolunu kullanarak calisan_verileri.csv dosyasını data klasörü altında oluşturduk. Bu örneğin çalışabilmesi için çalışma klasörününün içerisine data adında bir klasör oluşturmak gerekmektedir. index=False parametresi, DataFrame’in satır dizinlerinin CSV dosyasına yazılmamasını sağlar. Eğer index=True olarak ayarlanırsa, satır dizinleri CSV dosyasına yazdırılacaktır.</p>
+<p>Klasörlerin konumları ile ilgili şunları bilmek gereklidir.</p>
+<p>‘./’ dizini, bulunduğumuz çalışma dizinini temsil eder. Bu nedenle, ‘./data’ ifadesi, bulunduğunuz dizin içindeki ‘data’ adlı bir alt dizine işaret eder. ‘.’ karakteri, mevcut dizini ifade etmek için kullanılır.</p>
+<p>‘..’ ise bir üst dizini ifade eder. Örneğin, ‘../data’ ifadesi, mevcut dizinin bir üstündeki dizindeki ‘data’ adlı bir alt dizine işaret eder.</p>
+<p>‘’ karakteri, Windows işletim sistemlerinde dosya yollarında kullanılan bir kaçış karakteridir. Bu karakter, dosya yolu bölümlerini ayırmak için kullanılır. Örneğin, “C:\Users\kullanici_adi\Desktop” ifadesinde, ‘’ karakterleri “C:”, “Users”, “kullanici_adi” ve “Desktop” gibi dosya yolu bölümlerini ayırmak için kullanılır. Unix tabanlı işletim sistemlerinde ise ‘/’ karakteri kullanılır.</p>
+<p>Python’da da ‘’ karakteri kaçış karakteri olarak kullanılır. Ancak, Windows işletim sistemlerinde olduğu gibi dosya yollarında kullanılan ‘’ karakterleri yerine, Python’da Unix tabanlı işletim sistemlerinde olduğu gibi ‘/’ karakterleri kullanılır. Bunun nedeni, Windows işletim sisteminde ‘’ karakterinin kaçış karakteri olarak kullanılmasıdır ve dosya yollarında kullanılan ‘’ karakteri tek başına bir kaçış karakteri olarak algılandığından, dosya yolu yazımında hatalara yol açabilmektedir.</p>
+<p>Bununla birlikte Python’da iki tane arka arkaya ‘’ karakteri, bir tanesi normal bir karakter olarak kabul edilip diğerinin kaçış karakteri olarak kabul edilmesini sağlamak için kullanılır. Örneğin, “\server\path\filename” ifadesinde, iki tane ‘’ karakteri, dosya yolunda kullanılan normal ‘’ karakterleri ve kaçış karakterleri arasında bir ayırıcı olarak işlev görür. Bu ifadede, ilk iki ‘’ karakteri, ‘\server’ dizini için normal ‘’ karakterleridir. Sonraki iki ‘’ karakteri, ‘\path’ dizini için normal ‘’ karakterleridir. Ve son olarak, son ‘’ karakteri, dosya adı olan ‘filename’ için normal ‘’ karakteridir.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">os</span></code> modülü kullanarak kayıt</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">os</span></code> modülü kullanarak da dosyaları farklı klasörlere kaydedebilirsiniz. Eğer data klasörü yoksa oluştur komutunu da burada verebilirsiniz. Örneğin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">folder_path</span> <span class="o">=</span> <span class="s1">&#39;./data&#39;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span>
+
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="s1">&#39;calisan_verileri.csv&#39;</span><span class="p">)</span>
+<span class="n">calisan_verileri</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bu örnekte, os modülü kullanılarak öncelikle ./data klasörü oluşturulur. Daha sonra, os.path.join() yöntemi kullanarak calisan_verileri.csv dosyasının tam yolu oluşturulur ve DataFrame to_csv() yöntemi kullanılarak bu dosyaya yazdırılır.</p>
+<p><code class="docutils literal notranslate"><span class="pre">to_excel</span></code>: Bu metot, verileri bir Excel dosyasına yazdırmak için kullanılır. Örnek kullanımı:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DataFrame&#39;i bir Excel dosyasına yazdır</span>
+<span class="n">calisan_verileri</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;calisan_verileri.xlsx&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Elde edilen Excel dosyası açıldığında aşağıdaki gibi düzgün bir çıktı alınacaktır.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://bit.ly/3GSSYbx" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 6 - Excel Ekran Görüntüsü</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">to_sql</span></code>: Bu metot, verileri bir SQL veritabanına yazdırmak için kullanılır.</p>
+</section>
+</section>
+<section id="pandas-veri-tipleri">
+<h2>pandas Veri Tipleri<a class="headerlink" href="#pandas-veri-tipleri" title="Permalink to this headline">#</a></h2>
+<p>Pandas veri yapıları, aşağıdaki veri tiplerini içerebilir:</p>
+<ul class="simple">
+<li><p>float: Ondalık sayıları temsil eder. Örneğin, 3.14 gibi.</p></li>
+<li><p>int: Tam sayıları temsil eder. Örneğin, 42 gibi.</p></li>
+<li><p>bool: True ve False mantıksal değerlerini temsil eder.</p></li>
+<li><p>datetime: Tarih ve zaman değerlerini temsil eder. Örneğin, “2022-01-01 12:00:00” gibi.</p></li>
+<li><p>timedelta: İki tarih veya zaman arasındaki farkı temsil eder.</p></li>
+<li><p>object: Stringler, listeler, sözlükler, vb. nesneleri temsil eder.</p></li>
+</ul>
+<p>Pandas, bu temel veri yapılarına ek olarak, Categorical ve Sparse veri yapıları da sunar. Categorical veri yapısı, kategorik verileri temsil etmek için kullanılır ve Sparse veri yapısı, verilerin seyrek veya büyük olduğu durumlarda bellek kullanımını optimize etmek için kullanılır.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dtypes</span></code>, bir veri çerçevesinin tüm sütunlarının veri tiplerini gösteren bir özelliktir. Pandas DataFrame’i, farklı veri tiplerini (int, float, bool, string, datetime vb.) içeren sütunlardan oluşabilir. Her bir sütunun veri tipi, o sütundaki verilerin nasıl işleneceğini belirler.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dtypes</span></code>, DataFrame’deki sütunların veri tiplerini gösteren bir Seri nesnesi döndürür. Bu özellik, DataFrame’deki her sütunun veri tipini belirlemek ve herhangi bir sütunun veri tipini değiştirmek gibi işlemler yapmak için kullanılabilir. Ayrıca, farklı veri tiplerine sahip sütunların DataFrame’deki verileri nasıl işlediğini anlamak için de kullanılabilir. Örneğin, bir sütunun tamsayı değerleri taşıması ve daha sonra ondalık sayılara dönüştürülmesi isteniyorsa, bu özellik, ilgili sütunun veri tipini değiştirmek için kullanılabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://i.vgy.me/EaxeJm.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 7 - dtypes ekran görüntüsü</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">info()</span></code> metodu ise, DataFrame’in bellekteki boyutunu, sütunların isimlerini, dolu hücrelerin sayısını ve her sütundaki veri tiplerinin sayısını görüntüler. Bu metot ayrıca bellekteki DataFrame’in bellek kullanımı ve veri tipleri hakkında da bilgi sağlar.</p>
+<p>Ayrıca, her bir sütundaki eksik değerlerin sayısını ve veri tiplerinin bellek boyutunu da verir. Bu bilgi, veri seti üzerinde eksik değerlerin olduğu veya yanlış veri tipleri kullanıldığı durumlarda hataların nedenini anlamak için kullanılabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>  <span class="c1"># non-null sayılarını görmek için</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="https://i.vgy.me/Un0Upa.png" /></p>
+<p>Bununla birlikte bazı durumlarda veri tipleri arasında değişiklik yapılmak istenebilir. Bunun için <code class="docutils literal notranslate"><span class="pre">astype()</span></code> metodu kullanılabilir. Bu metot, Pandas DataFrame sütunlarının veri tiplerini değiştirmek için kullanılır. Bu yöntem, mevcut bir DataFrame’deki bir veya daha fazla sütunun veri tipini değiştirerek, veri analizi veya veri manipülasyonu için daha uygun bir formata dönüştürmeye olanak tanır.</p>
+<p>Örneğin, bir sütunun veri tipini sayısal bir formattan tarih veya saat formatına dönüştürmek isteyebilirsiniz. Bu durumda, <code class="docutils literal notranslate"><span class="pre">astype()</span></code> yöntemini kullanarak sütunun veri tipini değiştirebilirsiniz.</p>
+<p>Ayrıca, <code class="docutils literal notranslate"><span class="pre">astype()</span></code>, sayısal sütunları float veya integer veri tiplerine dönüştürerek hesaplama işlemlerinin hızını arttırmaya da yardımcı olabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calisan_verileri</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Yukarıdaki örnekte, <code class="docutils literal notranslate"><span class="pre">astype()</span></code> yöntemi kullanılarak ‘Salary’ sütununun veri tipi integer’dan float’a değiştirildi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="veriler-arasindaki-donusumler">
+<h3>Veriler arasındaki dönüşümler<a class="headerlink" href="#veriler-arasindaki-donusumler" title="Permalink to this headline">#</a></h3>
+<p>Pandas, bir veri tipinden diğerine dönüştürmek için birkaç farklı seçenek sunar. Bazı yaygın dönüşüm işlemleri şunları içerir:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">astype()</span></code>: Bu yöntem, bir DataFrame sütununu veya Serisi’ni başka bir veri tipine dönüştürmek için kullanılır. Örneğin, bir sayısal sütunu metinsel bir sütuna dönüştürebilirsiniz. Bu yöntem, belirli bir veri tipi için bir seçenek belirleyebilir veya geniş bir yelpaze sunan <code class="docutils literal notranslate"><span class="pre">category</span></code>, <code class="docutils literal notranslate"><span class="pre">datetime64</span></code>, <code class="docutils literal notranslate"><span class="pre">timedelta</span></code> vb. gibi özel veri tipleri için kullanılabilir.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">to_numeric()</span></code>: Bu yöntem, bir seriyi sayısal veri tipine dönüştürmek için kullanılır. Örneğin, bir serinin <code class="docutils literal notranslate"><span class="pre">object</span></code> veri tipinden <code class="docutils literal notranslate"><span class="pre">float</span></code> veya <code class="docutils literal notranslate"><span class="pre">int</span></code> veri tipine dönüştürebilirsiniz.</p>
+<p><code class="docutils literal notranslate"><span class="pre">to_datetime()</span></code>: Bu yöntem, bir Serisi’ni tarih / saat veri tipine dönüştürmek için kullanılır. Örneğin, bir seriyi <code class="docutils literal notranslate"><span class="pre">object</span></code> veya <code class="docutils literal notranslate"><span class="pre">string</span></code> veri tipinden <code class="docutils literal notranslate"><span class="pre">datetime64</span></code> veri tipine dönüştürebilirsiniz.</p>
+<p><code class="docutils literal notranslate"><span class="pre">to_timedelta()</span></code>: Bu yöntem, bir seriyi zaman aralığı (timedelta) veri tipine dönüştürmek için kullanılır. Örneğin, bir seriyi “object” veya “string” veri tipinden “timedelta” veri tipine dönüştürebilirsiniz.</p>
+<p>Aşağıdaki örnekler, bir veri tipinin diğerine nasıl dönüştürüleceğini gösterir:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># astype() yöntemi</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>   <span class="c1"># &#39;A&#39; sütununu str veri tipine dönüştürür</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>  <span class="c1"># &#39;B&#39; sütununu category veri tipine dönüştürür</span>
+
+<span class="c1"># to_numeric() yöntemi</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">])</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>   <span class="c1"># Serisi&#39;ni sayısal veri tipine dönüştürür</span>
+
+<span class="c1"># to_datetime() yöntemi</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;2021-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-02-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-03-01&#39;</span><span class="p">])</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="c1"># Serisi&#39;ni datetime64 veri tipine dönüştürür</span>
+
+<span class="c1"># to_timedelta() yöntemi</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;1 days&#39;</span><span class="p">,</span> <span class="s1">&#39;2 days&#39;</span><span class="p">,</span> <span class="s1">&#39;3 days&#39;</span><span class="p">])</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>   <span class="c1"># Serisi&#39;ni timedelta veri tipine dönüştürür</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bu örneklerde, <code class="docutils literal notranslate"><span class="pre">astype()</span></code>, <code class="docutils literal notranslate"><span class="pre">to_numeric()</span></code>, <code class="docutils literal notranslate"><span class="pre">to_datetime()</span></code> ve <code class="docutils literal notranslate"><span class="pre">to_timedelta()</span></code> yöntemleri kullanılarak farklı veri tiplerinin dönüşümü, verilerin analizi sırasında sık sık gereklidir. Pandas, çeşitli veri tipleri arasında dönüşüm yapabilen esnek bir kütüphanedir.</p>
+<p>Bununla birlikte, dönüştürme işlemlerinin her zaman otomatik olarak başarılı olması garanti edilemez. Verilerin doğru şekilde dönüştürülüp dönüştürülmediğini kontrol etmek için, dönüştürme işlemi sonrası verilerin tekrar kontrol edilmesi önemlidir. Ayrıca, verileri dönüştürmek, verilerin boyutlarını da değiştirebilir. Bu nedenle, dönüştürme işlemi sırasında oluşabilecek olası veri kaybı veya hataların farkında olmak da önemlidir.</p>
+</section>
+</section>
+<section id="veri-seti-uzerinde-islemler">
+<h2>Veri Seti Üzerinde İşlemler<a class="headerlink" href="#veri-seti-uzerinde-islemler" title="Permalink to this headline">#</a></h2>
+<p>Veri seti çok sayıda veriden oluşmaktadır. Bu nedenle veri setinin doğru şekilde alındığını göstermek açısından ilk satırlarının yazdırılması faydalı olacaktır. Bunun için <code class="docutils literal notranslate"><span class="pre">head()</span></code> metodu kullanılabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p><img alt="" src="https://bit.ly/3MTEBaS" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Şekil 6 - Veri setinin ekran görüntüsü</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># ilk 2 veri</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>  <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (1000, 7),</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">calisan_verileri</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;bu veri setinde </span><span class="si">{}</span><span class="s2"> adet veri vardır. Ayrıca özellik sayısı </span><span class="si">{}</span><span class="s2">&#39;dir.&quot;</span><span class="o">.</span>
+    <span class="nb">format</span><span class="p">(</span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">calisan_verileri</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pandas kütüphanesi DataFrame ve Series veri tiplerinde kullanılan <code class="docutils literal notranslate"><span class="pre">describe()</span></code> fonksiyonu, temel istatistiksel bilgileri özetleyen bir tablo oluşturur. Bu istatistiksel bilgiler arasında ortalama, standart sapma, minimum değer, maksimum değer, medyan, çeyreklikler ve veri sayısı yer alır.</p>
+<p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> fonksiyonu, özellikle veri setinin özetini hızlı bir şekilde elde etmek istediğinizde kullanışlıdır. Fonksiyon, sayısal verilerin yanı sıra kategorik veriler hakkında da bazı temel istatistiksel bilgiler sağlar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span> <span class="c1"># veri özetleme</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bu örnekte, <code class="docutils literal notranslate"><span class="pre">describe()</span></code> fonksiyonu calisan_verileri DataFrame’ine uygulanmış ve istatistiksel bilgileri özetleyen bir tablo oluşturulmuştur.</p>
+<p>Bu tablo, maaş ve Bonus sütunları için temel istatistiksel bilgileri özetlemektedir. Çıktı aşağıdaki gibi görünecektir:</p>
+<p><img alt="" src="https://i.vgy.me/vjCarD.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> fonksiyonu, varsayılan olarak sadece sayısal sütunlar için çalışır. Bununla birlikte, include parametresi kullanılarak belirli sütun türleri de tanımlanabilir. Örneğin, tüm sütunlar için istatistiksel özet bilgileri almak için <code class="docutils literal notranslate"><span class="pre">include='all'</span></code> parametresi kullanılabilir.</p>
+<p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> fonksiyonunun ayrıca percentiles parametresi de vardır. Bu parametre, özet istatistiklerindeki çeyreklikleri belirlemek için kullanılan yüzde değerleri tanımlamak için kullanılabilir. Varsayılan olarak, <code class="docutils literal notranslate"><span class="pre">percentiles</span></code> parametresi [0.05, 0.95] olarak ayarlanmıştır.</p>
+<p>Ayrıca, bu fonksiyonu varsayılan olarak tüm sütunlardaki eksik değerleri atlar. Bu davranış, <code class="docutils literal notranslate"><span class="pre">include='all'</span></code> parametresiyle aşılabileceği gibi, ayrıca dropna=False parametresi kullanılarak da değiştirilebilir. Bu, eksik değerlerin de dahil edilmesini sağlar ve eksik değerlerin sayısını özet istatistiklerinde gösterir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">percentiles</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span> <span class="c1"># diğer dilimleri de görüntülemek için</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Veri çerçevesinde veri manipülasyonu, analizi ve temizliği için kullanılan pandas kütüphanesi, veri çerçevesi objeleriyle ilgili birçok metot içermektedir. Bu metotlar, veri işleme sürecinde oldukça yararlıdır. Aşağıda, bazı önemli veri çerçevesi metotları ve kısa açıklamaları yer almaktadır:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">head()</span></code>: Veri çerçevesinin ilk birkaç satırını görüntüler.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tail()</span></code>: Veri çerçevesinin son birkaç satırını görüntüler.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop()</span></code>: Veri çerçevesinden belirtilen sütun veya satırları çıkarır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">groupby()</span></code>: Belirli bir sütuna göre verileri gruplar.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">merge()</span></code>: İki veya daha fazla veri çerçevesini belirtilen sütuna göre birleştirir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sort_values()</span></code>: Belirli bir sütuna göre verileri sıralar.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code>: Veri çerçevesindeki verileri bir tablo halinde yeniden düzenler.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isna()</span> <span class="pre">/</span> <span class="pre">isnull()</span></code>: Veri çerçevesindeki boş değerleri (NaN) tespit eder.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fillna()</span></code>: Veri çerçevesindeki boş değerleri belirli bir değerle doldurur.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop_duplicates()</span></code>: Veri çerçevesindeki tekrarlayan satırları çıkarır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apply()</span></code>: Veri çerçevesinde belirtilen işlevi sütunlar veya satırlar üzerinde uygular.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map()</span></code>: Belirtilen bir işlevi veri çerçevesinin belirli bir sütununa veya serisine uygular.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replace()</span></code>: Belirli bir değeri başka bir değerle değiştirir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count()</span></code>: Her sütundaki non-null (boş olmayan) veri sayısını verir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nunique()</span></code>: Her sütundaki benzersiz (tekrar etmeyen) veri sayısını verir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sum()</span></code>: Her sütundaki sayısal verilerin toplamını verir. Eğer sütunda sayısal veri yoksa o sütun atlanır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">corr()</span></code>: Sütunlar arasındaki korelasyon matrisini oluşturur. Korelasyon, iki değişken arasındaki ilişkinin gücünü ve yönünü ölçer. Değerler -1 ile 1 arasındadır. -1 mükemmel negatif korelasyonu, 1 mükemmel pozitif korelasyonu ve 0 korelasyon olmadığını gösterir.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">count()</span></code>, <code class="docutils literal notranslate"><span class="pre">sum()</span></code>, <code class="docutils literal notranslate"><span class="pre">mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">min()</span></code>, <code class="docutils literal notranslate"><span class="pre">max()</span></code>, <code class="docutils literal notranslate"><span class="pre">std()</span></code> ve <code class="docutils literal notranslate"><span class="pre">corr()</span></code> fonksiyonları hem Series hem de DataFrame veri yapıları için kullanılabilirken <code class="docutils literal notranslate"><span class="pre">nunique()</span></code>, <code class="docutils literal notranslate"><span class="pre">value_counts()</span></code> gibi fonksiyonlar ise yalnızca Series veri yapısı için kullanılabilirdir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">Team</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="c1"># hangi takımda kaç kişi var?</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Takımlara ait istatistikler</span>
+<span class="n">calisan_verileri</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Team&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Team&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Team</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">Team</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="c1"># Tekil verileri getirir.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="eksik-veri-islemleri">
+<h3>Eksik veri işlemleri<a class="headerlink" href="#eksik-veri-islemleri" title="Permalink to this headline">#</a></h3>
+<section id="none-ve-nan-veri-tipleri">
+<h4><code class="docutils literal notranslate"><span class="pre">None</span></code> ve <code class="docutils literal notranslate"><span class="pre">NaN</span></code> veri tipleri<a class="headerlink" href="#none-ve-nan-veri-tipleri" title="Permalink to this headline">#</a></h4>
+<p>Python’da eksik verileri temsil etmek için genellikle iki ana veri tipi kullanılır: <code class="docutils literal notranslate"><span class="pre">None</span></code> ve <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">None</span></code>, bir değişkenin değerinin bilinmediği veya tanımlanmadığı durumlarda kullanılır. Örneğin, bir fonksiyonun dönüş değerinin tanımsız olduğu durumlarda None kullanılır.</p>
+<p><code class="docutils literal notranslate"><span class="pre">NaN</span> <span class="pre">(Not</span> <span class="pre">a</span> <span class="pre">Number)</span></code> ise matematiksel işlemler sırasında ortaya çıkan veya eksik sayısal verileri temsil etmek için kullanılır. <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, float veri tipi içinde kullanılır ve matematiksel işlemler sırasında oluşan sayısal hataları temsil eder.</p>
+<p>Pandas kütüphanesi de eksik verileri temsil etmek için <code class="docutils literal notranslate"><span class="pre">NaN</span></code> değerini kullanır. <code class="docutils literal notranslate"><span class="pre">NaN</span></code> değeri, bir DataFrame veya Series içindeki belirli bir hücrenin değerinin eksik olduğunu belirtir. Pandas, <code class="docutils literal notranslate"><span class="pre">NaN</span></code> değerlerini otomatik olarak tespit eder ve bu değerleri işlem yaparken dikkate alır.</p>
+<p>Eksik verilerin doğru şekilde yönetilmesi, veri analizi ve modelleme sırasında önemlidir. Pandas, eksik verileri ele almak için çeşitli yöntemler sunar, bunlar arasında eksik verileri silmek, eksik verileri belirli bir değer ile doldurmak veya eksik verileri interpolate etmek yer alır.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span> <span class="c1"># NoneType</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span> <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Yukarıdaki kodda görüldüğü gibi <code class="docutils literal notranslate"><span class="pre">None</span></code> ve <code class="docutils literal notranslate"><span class="pre">NaN</span></code> arasındaki fark, temsil ettikleri veri tiplerinden kaynaklanır.</p>
+<p><code class="docutils literal notranslate"><span class="pre">None</span></code> bir Python nesnesidir ve bir değişkenin değerinin bilinmediği veya tanımlanmadığı durumlarda kullanılır. <code class="docutils literal notranslate"><span class="pre">None</span></code>, herhangi bir veri tipine ait olmayan özel bir değerdir ve yalnızca Python programlama dilinde kullanılır.</p>
+<p><code class="docutils literal notranslate"><span class="pre">NaN</span> <span class="pre">(Not</span> <span class="pre">a</span> <span class="pre">Number)</span></code> ise float veri tipinde kullanılan bir değerdir. Matematiksel işlemler sırasında oluşan veya eksik sayısal verileri temsil etmek için kullanılır. <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, sayısal bir değerin tanımsız veya hesaplanamaz olduğunu belirtir.</p>
+<p>Yani, <code class="docutils literal notranslate"><span class="pre">None</span></code> bir nesne veya değişkenin tanımlanmadığı veya bilinmediği durumlarda kullanılırken, <code class="docutils literal notranslate"><span class="pre">NaN</span></code> sayısal değerlerde oluşan eksik veya tanımsız durumlar için kullanılır.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># nan</span>
+<span class="nb">print</span><span class="p">(</span><span class="kc">None</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># unsupported operand type(s) for +: &#39;NoneType&#39; and &#39;int&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/d78PlT.png">
+Öncelikle, bir eksik veri serisi oluşturmak için `None` ve `NaN` değerlerini kullanabiliriz.<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eksik_veri_serisi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s2">&quot;Merhaba&quot;</span><span class="p">])</span>
+<span class="n">eksik_veri_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">eksik_veri_serisi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eksik_veri_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/aWemoH.png"></section>
+<section id="isnull-isna-notnull-notna-fonksiyonlari">
+<h4><code class="docutils literal notranslate"><span class="pre">isnull()</span></code>, <code class="docutils literal notranslate"><span class="pre">isna()</span></code>, <code class="docutils literal notranslate"><span class="pre">notnull()</span></code>, <code class="docutils literal notranslate"><span class="pre">notna()</span></code> fonksiyonları<a class="headerlink" href="#isnull-isna-notnull-notna-fonksiyonlari" title="Permalink to this headline">#</a></h4>
+<p>Bu seri, 2 tane eksik veri içermektedir. Bu eksik verileri tespit etmek için <code class="docutils literal notranslate"><span class="pre">isnull()</span></code> fonksiyonu kullanılabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eksik_veri_df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/Jzm677.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">eksik_veri_df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1"># toplam eksik veri sayısı 2 </span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eksik_veri_df</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1"># eksik olmayan veri sayısı 4</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fillna">
+<h4><code class="docutils literal notranslate"><span class="pre">fillna()</span></code><a class="headerlink" href="#fillna" title="Permalink to this headline">#</a></h4>
+<p>Eksik verileri doldurmak için, <code class="docutils literal notranslate"><span class="pre">fillna()</span></code> fonksiyonunu kullanabiliriz. Bu fonksiyon, belirli bir değerle eksik verileri doldurur. Örneğin, aşağıdaki örnekte eksik verileri 0 ve -999 ile dolduruyoruz:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">eksik_veri_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eksik_veri_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=-</span><span class="mi">999</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/KwJOpW.png"><p>Başka bir seçenek olarak, <code class="docutils literal notranslate"><span class="pre">ffill</span></code> ve <code class="docutils literal notranslate"><span class="pre">bfill</span></code> yöntemlerini kullanarak eksik verileri önceki veya sonraki değerlerle doldurabiliriz.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seri_ffill</span> <span class="o">=</span> <span class="n">eksik_veri_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ffill&#39;</span><span class="p">)</span>  <span class="c1"># önceki değerle doldur</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_ffill</span><span class="p">)</span>
+
+<span class="n">seri_bfill</span> <span class="o">=</span> <span class="n">eksik_veri_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfill&#39;</span><span class="p">)</span>  <span class="c1"># sonraki değerle doldur</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_bfill</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/d6RItn.png">
+<p><code class="docutils literal notranslate"><span class="pre">ffill</span></code> yöntemi, eksik verileri önceki değerle doldururken, <code class="docutils literal notranslate"><span class="pre">bfill</span></code> yöntemi sonraki değerle doldurur.</p>
+<p>Ayrıca, <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> yöntemini kullanarak, eksik verileri verilerin aritmetik ortalaması veya doğrusal bir model kullanarak interpolate edebiliriz. Bu yöntemi kullanmadan önce serinin nümerik değerlerden oluştuğundan emin olmak gereklidir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seri_interpolate</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span><span class="o">.</span><span class="n">interpolate</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seri_interpolate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/DHuMY4.png">
+<p>Yukarıdaki örnekte, eksik verileri doğrusal bir model kullanarak interpolate ettik. Eksik veriler, verilerin aritmetik ortalaması veya başka bir yöntemle de doldurulabilir.</p>
+<p>dropna() fonksiyonu, eksik verileri içeren satırları veya sütunları veri kümesinden kaldırmak için kullanılır. Bu fonksiyon, NaN değerlerini içeren satırları veya sütunları veri kümesinden çıkararak yeni bir veri kümesi oluşturur.</p>
+<p>İlk olarak, bir örnek veri kümesi oluşturalım:</p>
+</section>
+<section id="dropna">
+<h4><code class="docutils literal notranslate"><span class="pre">dropna()</span></code><a class="headerlink" href="#dropna" title="Permalink to this headline">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">dropna()</span></code> fonksiyonu, eksik verileri içeren satırları veya sütunları veri kümesinden kaldırmak için kullanılır. Bu fonksiyon, NaN değerlerini içeren satırları veya sütunları veri kümesinden çıkararak yeni bir veri kümesi oluşturur.</p>
+<p>İlk olarak, bir örnek veri kümesi oluşturalım:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                   <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+                   <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/RKylsS.png">
+<p>Bu veri kümesinde, NaN değerleri içeren satırlar ve sütunlar var. Bu veri kümesinden <code class="docutils literal notranslate"><span class="pre">dropna()</span></code> fonksiyonunu kullanarak, NaN değerlerini içeren satırları kaldırabiliriz:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_without_nulls</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_without_nulls</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/TSUz5K.png">
+`dropna()` fonksiyonu, varsayılan olarak herhangi bir NaN değeri içeren satırı kaldırır ve yeni bir veri kümesi oluşturur. `dropna()` fonksiyonuna axis parametresi ekleyerek, NaN değerleri içeren sütunları kaldırabiliriz:<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_without_nulls_col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_without_nulls_col</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/LBNthI.png"><p>Bu örnekte, <code class="docutils literal notranslate"><span class="pre">axis=1</span></code> parametresi ile sütunları kaldırdık ve sadece C sütunu kaldı.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dropna()</span></code> fonksiyonu, how parametresi ile daha spesifik davranışlar gösterir. Varsayılan olarak <code class="docutils literal notranslate"><span class="pre">how='any'</span></code> olarak ayarlanmıştır, yani herhangi bir eksik değer içeren satırlar veya sütunlar silinir. Ancak, <code class="docutils literal notranslate"><span class="pre">how='all'</span></code> olarak ayarlandığında, tüm değerleri eksik olan satırlar veya sütunlar silinir. Örneğin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_all_null</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+                            <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+                            <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_all_null</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/HCEOlJ.png">
+<p>Bu örnekte, tüm satırlar veya sütunlar NaN olduğu için, <code class="docutils literal notranslate"><span class="pre">dropna()</span></code> fonksiyonu tüm verileri kaldırdı ve boş bir DataFrame döndürdü.</p>
+<p>Ayrıca, <code class="docutils literal notranslate"><span class="pre">dropna()</span></code> fonksiyonu <code class="docutils literal notranslate"><span class="pre">thresh</span></code> parametresi ile belirtilen eşik değerinden daha az sayıda geçerli (yani, eksik olmayan) değere sahip olan satırlar veya sütunlar silinir. Örneğin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_thresh</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                          <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+                          <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_thresh</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/BO1KlV.png">
+Bu veri kümesinde, en az 2 geçerli değere sahip satırlar veya sütunlar korunacak:<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_thresh_dropped</span> <span class="o">=</span> <span class="n">df_thresh</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">thresh</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_thresh_dropped</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/J0HBIO.png">
+<p>Bu örnekte, sadece 2 veya daha fazla geçerli değere sahip olan satırlar ve sütunlar korundu. thresh parametresi, verilerin çeşitli yönlerde temizlenmesine yardımcı olabilir, özellikle büyük veri kümelerinde, verilerin sadece bir kısmı eksikse.</p>
+</section>
+</section>
+<section id="aykiri-veri-analizi">
+<h3>Aykırı veri analizi<a class="headerlink" href="#aykiri-veri-analizi" title="Permalink to this headline">#</a></h3>
+<p>Pandas, aykırı verilerin tespiti ve analizi için kullanılabilen bir dizi fonksiyona sahiptir. Aykırı veriler, genellikle diğer verilerden önemli ölçüde farklı olan ve istatistiksel analizlerde yanıltıcı sonuçlara neden olabilen verilerdir.</p>
+<p>Pandas’da aykırı verileri tespit etmek için kullanabileceğiniz birkaç yöntem vardır. Bunlar arasında:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> yöntemi: Bu yöntem, veri setinin istatistiklerini hesaplar ve aykırı değerlerin olup olmadığını gösterir. <code class="docutils literal notranslate"><span class="pre">describe()</span></code> yöntemi, veri setindeki en küçük ve en büyük değerleri, ortalamayı, standart sapmayı ve çeyrekliklerin değerlerini gösterir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">boxplot()</span></code> yöntemi: Bu yöntem, kutu grafiği olarak da bilinir ve veri setindeki aykırı değerleri görselleştirir. Kutu grafiği, veri setinin dağılımını gösterir ve aykırı değerlerin kutunun dışında kalan noktalar olarak belirtilir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quantile()</span></code> yöntemi: Bu yöntem, belirli bir yüzdelik aralığında yer alan değerleri hesaplar. Bu yöntem kullanılarak, belirli bir yüzdelik aralığına girmeyen değerler aykırı olarak kabul edilebilir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isolation</span> <span class="pre">forest</span></code> yöntemi: Bu yöntem, veri setindeki aykırı değerleri tespit etmek için bir makine öğrenmesi algoritmasıdır. Bu yöntem, veri setindeki aykırı değerleri gruplamak için ağaç yapısı kullanır.</p></li>
+</ol>
+<p>Bunlar, pandas kütüphanesi ile aykırı veri analizi için kullanılabilecek yöntemlerden sadece birkaçıdır. Bu yöntemler, veri setindeki aykırı değerleri tespit etmek ve işlemek için kullanılabilir.</p>
+<section id="iqr-yontemi">
+<h4>IQR yöntemi<a class="headerlink" href="#iqr-yontemi" title="Permalink to this headline">#</a></h4>
+<p>IQR (Interquartile Range) yöntemi, aykırı değerleri tanımlamak için kullanılan bir istatistiksel yöntemdir. Bu yöntem, veri dağılımındaki çeyrekliklerin aralığını kullanarak bir alt ve üst sınır belirler ve bu sınırların dışındaki değerleri aykırı olarak tanımlar.</p>
+<p>IQR, bir veri kümesindeki değerlerin ortalamasının yerine veri dağılımının merkezi eğilim ölçüsü olarak kullanılır. Veri kümesindeki değerlerin çoğu IQR içinde kaldığı için, IQR yöntemi aykırı değerleri belirlemek için daha güvenilirdir. IQR, verilerin ortalamasına karşı daha dayanıklıdır çünkü sadece veri kümesinin ortasındaki değerlerin aralığını kullanır.</p>
+<p>IQR yöntemi kullanarak aykırı değerleri belirlemek için, verilerin 1. ve 3. çeyrekliklerinin aralığı (yani IQR) hesaplanır. Ardından, alt sınır Q1 - 1.5 x IQR ve üst sınır Q3 + 1.5 x IQR şeklinde hesaplanır. Bu sınırların dışındaki herhangi bir değer aykırı olarak kabul edilir.</p>
+<p>Örneğin, bir veri kümesinde Q1 = 20 ve Q3 = 50 olsun. Bu durumda, IQR = Q3 - Q1 = 50 - 20 = 30 olacaktır. Alt sınır, 20 - 1.5 x 30 = -5, üst sınır ise 50 + 1.5 x 30 = 95 olacaktır. Veri kümesindeki herhangi bir değer -5’ten küçük veya 95’ten büyükse aykırı olarak kabul edilecektir.</p>
+<p>Aşağıdaki örnekte <code class="docutils literal notranslate"><span class="pre">titanic</span></code> veri seti üzerinde bir aykırı veri analizi gösterilmiştir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">veri_seti</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv&quot;</span><span class="p">)</span>
+<span class="n">veri_seti</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">veri_seti</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/yaFBIy.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># veri setinin doldurulması</span>
+<span class="n">doldurulmus_veri</span> <span class="o">=</span> <span class="n">veri_seti</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;bfill&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;ffill&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Aşağıdaki komut, “Age” sütununun istatistiksel özetini oluşturur. İstatistiksel özet, sütunun minimum ve maksimum değerleri, ortalama, standart sapma, medyan ve çeyreklikler gibi önemli özelliklerini içerir. “describe()” fonksiyonu, veri çerçevesindeki sayısal sütunlar için bu tür istatistiksel özetler oluşturmak için sıklıkla kullanılan bir yöntemdir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/c2ITP5.png">
+<p>Aşağıdaki komut, “Age” adlı bir değişkenin kutu grafiğini çizmek için Pandas kütüphanesinin “plot” fonksiyonunu kullanır.</p>
+<p>Bu komut, bir veri çerçevesindeki “Age” sütununu seçerek, sütundaki sayısal verilerin çeyrekler arası mesafeleri, minimum ve maksimum değerleri, olası aykırı değerleri vb. görselleştiren bir kutu grafiği çizer. Bu grafiği kullanarak, veri setindeki “Age” sütunundaki dağılımı görsel olarak anlayabiliriz.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/D6kvyh.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q1</span> <span class="o">=</span> <span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q1: </span><span class="si">{}</span><span class="s2">, Q3: </span><span class="si">{}</span><span class="s2">, IQR: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q1</span><span class="p">,</span> <span class="n">Q3</span><span class="p">,</span> <span class="n">IQR</span><span class="p">))</span> <span class="c1"># Q1: 21.0, Q3: 39.0, IQR: 18.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt_sinir</span> <span class="o">=</span> <span class="n">Q1</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">IQR</span>
+<span class="n">ust_sinir</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">IQR</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt_sinir</span><span class="p">,</span> <span class="n">ust_sinir</span> <span class="c1"># (-6.0, 66.0)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># alt sınırın altında veri var mı?</span>
+<span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="p">[</span><span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span> <span class="o">&lt;</span> <span class="n">alt_sinir</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># üst sınırın üzerinde veri var mı?</span>
+<span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="p">[</span><span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="o">&gt;</span><span class="n">ust_sinir</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/JyrrEg.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># alt sınır ve üst sınırı aşan verileri traşladık</span>
+<span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="p">[</span><span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span> <span class="o">&gt;</span> <span class="n">ust_sinir</span><span class="p">]</span> <span class="o">=</span> <span class="n">ust_sinir</span>
+<span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="p">[</span><span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span> <span class="o">&lt;</span> <span class="n">alt_sinir</span><span class="p">]</span> <span class="o">=</span> <span class="n">alt_sinir</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># yeniden kontrol edildiğinde</span>
+<span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/haBd0B.png"></section>
+<section id="z-skoru-yontemi">
+<h4>Z-Skoru yöntemi<a class="headerlink" href="#z-skoru-yontemi" title="Permalink to this headline">#</a></h4>
+<p>Z-skoru yöntemi, verilerin ortalama ve standart sapma değerlerini kullanarak aykırı değerleri belirlemek için kullanılan bir yöntemdir. Bu yöntemde, verilerin standart sapma değerlerine göre ne kadar uzağa olduklarına göre bir skor verilir. Skorların dağılımı normal dağılıma göre ayarlanır ve genellikle 3’ün üzerinde veya altında kalan skorlar aykırı değer olarak kabul edilir.</p>
+<p>Z-skoru hesaplamak için, her bir veri noktasının ortalama değerden uzaklığının standart sapmaya bölünmesi gerekir. Formül aşağıdaki gibidir:</p>
+<p>Z = (x - mean) / std</p>
+<p>Burada:</p>
+<ul class="simple">
+<li><p>x, herhangi bir veri noktası</p></li>
+<li><p>mean, veri setinin ortalaması</p></li>
+<li><p>std, veri setinin standart sapması</p></li>
+</ul>
+<p>Örneğin, bir veri setinde ortalama değer 50 ve standart sapma 10 ise, bir veri noktası 70 olsun. Z-skoru aşağıdaki şekilde hesaplanabilir:</p>
+<p>Z = (70 - 50) / 10 = 2</p>
+<p>Bu veri noktası, veri setinin normal dağılımına göre 2 standart sapma yukarıdadır. Eğer bu değer 3’ten büyükse veya -3’ten küçükse, bu veri noktası aykırı değer olarak kabul edilir.</p>
+<p>Pandas kütüphanesi ile Z-skoru yöntemi kullanılarak aykırı değerleri bulmak için, “zscore” fonksiyonu kullanılabilir. Bu fonksiyon, belirli bir sütundaki her bir veri noktasının Z-skorunu hesaplar ve bunları yeni bir sütuna ekler. Ardından, belirli bir eşik değerine göre aykırı değerleri seçmek için bu sütunu filtrelemek mümkündür. Örneğin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verileri yükle</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">doldurulmus_veri</span>
+
+<span class="c1"># &#39;degerler&#39; sütunundaki her bir veri noktasının Z-skorunu hesapla</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;z_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="c1"># Z-skoru eşiği 3 olan aykırı değerleri seç</span>
+<span class="n">outliers</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;z_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outliers</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="veri-donusum-islemleri">
+<h3>Veri dönüşüm işlemleri<a class="headerlink" href="#veri-donusum-islemleri" title="Permalink to this headline">#</a></h3>
+<p>Pandas kütüphanesi, verileri manipüle etmek için birçok işlevsellik sunar. Bu işlevsellikler arasında veri dönüşümleri, normalizasyon, standardizasyon ve kesikli hale getirme gibi işlemler de bulunur.</p>
+<ul class="simple">
+<li><p>Veri dönüşümleri: Veri dönüşümleri, verilerin farklı birimler veya formatlarla sunulduğu durumlarda kullanışlıdır. Pandas’ta veri dönüşümleri, “apply” ve “map” fonksiyonları gibi farklı yöntemlerle gerçekleştirilebilir.</p></li>
+<li><p>Normalizasyon: Normalizasyon, verilerin arasındaki değerleri sınırlandırarak verilerin dağılımını düzenler. Bu işlem sayesinde farklı birimlerdeki veriler aynı ölçekte karşılaştırılabilir hale gelir. Normalizasyon için genellikle Min-Max Normalizasyonu kullanılır.</p></li>
+<li><p>Standardizasyon: Standardizasyon, verilerin arasındaki standart sapmaları kullanarak verilerin dağılımını düzenler. Bu işlem sayesinde farklı birimlerdeki verilerin dağılımları daha anlamlı hale gelir. Standardizasyon için genellikle Z-skoru yöntemi kullanılır.</p></li>
+<li><p>Kesikli hale getirme: Kesikli hale getirme, sürekli sayısal verileri belirli aralıklarla kesikli hale getirerek verilerin anlamlı hale gelmesini sağlar. Bu işlem, özellikle makine öğrenimi modellerinde kategorik değişkenlerle birlikte kullanılmak üzere faydalıdır.</p></li>
+</ul>
+<p>Örnek olarak, veri setindeki bir sütunu normalizasyon, standardizasyon veya kesikli hale getirme işlemlerinden biri ile işleyebilirsiniz. Örneğin, “Age” sütununu 0 ile 1 arasındaki değerlere normalizasyon yaparak işleyebilirsiniz:</p>
+<section id="normalizasyon">
+<h4>Normalizasyon<a class="headerlink" href="#normalizasyon" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age_Normalized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Age&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Bu kodda, “Age” sütununun değerleri Min-Max Normalizasyon yöntemi ile 0 ile 1 arasındaki değerlere dönüştürülüp “Age_Normalized” adlı yeni bir sütunda saklanır.</p>
+<p>Ya da benzer işlem kendi yazacağımız denklem üzerinden de gerçekleştirilebilir. Aşağıdaki kodlar bu amacı yerine getirmektedir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yas</span> <span class="o">=</span> <span class="n">doldurulmus_veri</span><span class="o">.</span><span class="n">Age</span>
+<span class="n">normalize_edilmis</span> <span class="o">=</span> <span class="p">(</span><span class="n">yas</span> <span class="o">-</span> <span class="n">yas</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">yas</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">yas</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="n">normalize_edilmis</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/qI2rx6.png"></section>
+<section id="standardizasyon">
+<h4>Standardizasyon<a class="headerlink" href="#standardizasyon" title="Permalink to this headline">#</a></h4>
+<p>Tablodaki ‘Salary’ sütununu standardize etmek için örnek bir pandas kodu aşağıdaki gibi olabilir:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Örnek bir veri seti</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ali&#39;</span><span class="p">,</span> <span class="s1">&#39;Veli&#39;</span><span class="p">,</span> <span class="s1">&#39;Ahmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Mehmet&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">29</span><span class="p">],</span>
+        <span class="s1">&#39;Salary&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">7000</span><span class="p">,</span> <span class="mi">4500</span><span class="p">,</span> <span class="mi">6000</span><span class="p">]}</span>
+
+<span class="c1"># Verileri bir pandas DataFrame nesnesine dönüştürme</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Verileri standardize etme</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Standardized_Salary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]])</span>
+
+<span class="c1"># Sonuçları yazdırma</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/x7oEl2.png"><p>Bu kodda, <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> fonksiyonu ile <code class="docutils literal notranslate"><span class="pre">Salary</span></code> sütunu standart normal dağılım (ortalama 0 ve standart sapma 1) haline getiriliyor. Bu işlem, tüm veri setinin aynı ölçekte olmasını sağlamak için yapılır ve makine öğrenmesi modelleri gibi bazı analizlerde gereklidir. Yeni standartlaştırılmış sütun, <code class="docutils literal notranslate"><span class="pre">Standardized_Salary</span></code> olarak adlandırılır ve DataFrame’e eklenir.</p>
+</section>
+<section id="kesikli-hale-getirme">
+<h4>Kesikli hale getirme<a class="headerlink" href="#kesikli-hale-getirme" title="Permalink to this headline">#</a></h4>
+<p>Kesikli hale getirme (discretization), bir sürekli değişkenin belirli aralıklara ayrılması işlemidir. Bu işlem sayesinde veriler daha kolay yorumlanabilir ve anlaşılabilir hale gelir.</p>
+<p>Pandas kütüphanesi ile kesikli hale getirme işlemi <code class="docutils literal notranslate"><span class="pre">cut()</span></code> fonksiyonu ile yapılabilir. Bu fonksiyon, bir aralık serisini kesikli kategorik bir değişkene dönüştürür. Örneğin, bir veri setindeki yaş değişkenini belirli aralıklara bölerek yaş kategorileri elde etmek için kullanılabilir.</p>
+<p>Aşağıda örnek bir kesikli hale getirme işlemi bulunmaktadır:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Örnek veri seti</span>
+<span class="n">veri</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;yaş&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">24</span><span class="p">]})</span>
+
+<span class="c1"># Yaş aralıklarını belirleme</span>
+<span class="n">araliklar</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+
+<span class="c1"># Yaş değişkenini kesikli hale getirme</span>
+<span class="n">veri</span><span class="p">[</span><span class="s1">&#39;yaş_kategorisi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">veri</span><span class="p">[</span><span class="s1">&#39;yaş&#39;</span><span class="p">],</span> <span class="n">araliklar</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">veri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/14Aohy.png"><p>Bu kod örneği, <code class="docutils literal notranslate"><span class="pre">yaş</span></code> değişkenindeki her bir değeri belirtilen aralıklara göre kesikli hale getirir ve yeni bir <code class="docutils literal notranslate"><span class="pre">yaş_kategorisi</span></code> değişkeni oluşturur. Çıktı aşağıdaki gibi olacaktır:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">yaş</span> <span class="n">yaş_kategorisi</span>
+<span class="mi">0</span>   <span class="mi">25</span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="mi">1</span>   <span class="mi">36</span>       <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+<span class="mi">2</span>   <span class="mi">42</span>       <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="mi">3</span>   <span class="mi">29</span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="mi">4</span>   <span class="mi">51</span>       <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="mi">5</span>   <span class="mi">46</span>       <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="mi">6</span>   <span class="mi">39</span>       <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+<span class="mi">7</span>   <span class="mi">33</span>       <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+<span class="mi">8</span>   <span class="mi">28</span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="mi">9</span>   <span class="mi">24</span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Görüldüğü gibi, her bir yaş değeri, belirlenen aralıklara göre bir kategoriye atanmıştır. Bu şekilde, <code class="docutils literal notranslate"><span class="pre">yaş</span></code> değişkeni daha anlamlı ve yorumlanabilir bir hale getirilmiştir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yas_kategorileri</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cocuk&quot;</span><span class="p">,</span> <span class="s2">&quot;genc&quot;</span><span class="p">,</span> <span class="s2">&quot;yasli&quot;</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">veri</span><span class="p">[</span><span class="s1">&#39;yaş&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">araliklar</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">yas_kategorileri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/pzv6G7.png"></section>
+<section id="one-hot-encoding">
+<h4>One-hot encoding<a class="headerlink" href="#one-hot-encoding" title="Permalink to this headline">#</a></h4>
+<p>One-Hot Encoding, kategorik değişkenlerin (categorical variables) makine öğrenmesi algoritmalarında kullanılabilmesi için sayısal veriye dönüştürülmesi işlemidir. Bu işlem, her kategorik değişkenin ayrı bir özellik olarak ele alındığı ve bu özelliklerin sadece 0 veya 1 değerleri alabildiği yeni bir veri kümesi oluşturur. Bu yöntem, sınıflandırma algoritmalarının daha doğru sonuçlar vermesine yardımcı olur.</p>
+<p>Örnek olarak, bir “renk” değişkeni düşünelim. Bu değişken “kırmızı”, “yeşil” ve “mavi” gibi 3 farklı kategorik değer alabilsin. One-Hot Encoding ile bu değişken, “renk_kırmızı”, “renk_yeşil” ve “renk_mavi” olmak üzere 3 farklı özellik haline dönüştürülür. Her bir özellik, orijinal “renk” değişkeninin o değerine sahipse 1, diğer durumlarda 0 değerini alır.</p>
+<p>Pandas kütüphanesi, One-Hot Encoding işlemi için get_dummies() fonksiyonunu sağlar. Bu fonksiyon, kategorik değişkenleri otomatik olarak bulur ve yeni özellikler haline dönüştürür. Örnek kullanım aşağıdaki gibidir:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Örnek veri seti</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;renk&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;kırmızı&#39;</span><span class="p">,</span> <span class="s1">&#39;mavi&#39;</span><span class="p">,</span> <span class="s1">&#39;yeşil&#39;</span><span class="p">,</span> <span class="s1">&#39;mavi&#39;</span><span class="p">,</span> <span class="s1">&#39;kırmızı&#39;</span><span class="p">]}</span>
+
+<span class="c1"># Veri setini DataFrame&#39;e dönüştürme</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># One-Hot Encoding işlemi</span>
+<span class="n">one_hot_encoded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;renk&#39;</span><span class="p">])</span>
+
+<span class="c1"># Yeni özellikleri DataFrame&#39;e ekleme</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">one_hot_encoded</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Sonuçları görüntüleme</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Benzer işlem <code class="docutils literal notranslate"><span class="pre">titanic</span></code> veri setine de yapılabilir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">veri_seti</span><span class="o">.</span><span class="n">Embarked</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">veri_seti</span><span class="o">.</span><span class="n">Embarked</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kukla değişken - one-hot encoding</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">veri_seti</span><span class="o">.</span><span class="n">Embarked</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/CJ3Hdt.png"></section>
+</section>
+<section id="formul-uygulama">
+<h3>Formül Uygulama<a class="headerlink" href="#formul-uygulama" title="Permalink to this headline">#</a></h3>
+<p>Pandas kütüphanesi, <code class="docutils literal notranslate"><span class="pre">map()</span></code> ve <code class="docutils literal notranslate"><span class="pre">apply()</span></code> gibi fonksiyonlar aracılığıyla veri işleme işlevselliği sağlar.</p>
+<p><code class="docutils literal notranslate"><span class="pre">map()</span></code> fonksiyonu, bir pandas Serisi’ndeki tüm öğeleri değiştirmek için kullanılır. Bu işlev, bir sözlük, işlev veya Seri nesnesi alabilir ve Seri öğelerini değiştirmek için bu nesneleri kullanır. Örneğin aşağıdaki kod, Salary Serisi’deki tüm öğelere 200.000 artırarak ve sonucu ekrana yazdıracaktır:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">Salary</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">200000</span><span class="p">)</span> <span class="c1"># Salary lere toplu artış</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/ZEoJsv.png"><p><code class="docutils literal notranslate"><span class="pre">apply()</span></code> fonksiyonu ise, bir DataFrame’in bir sütununda veya satırında işlevleri uygulamak için kullanılır. <code class="docutils literal notranslate"><span class="pre">apply()</span></code> fonksiyonu, <code class="docutils literal notranslate"><span class="pre">map()</span></code> fonksiyonuna benzer şekilde işlevlerin uygulanmasında kullanılır ancak, DataFrame veri yapısında uygulanır. Aşağıdaki kod, istenilen DataFrame sütununda bir yazılan fonksiyonun işlemini yapacak ve sonucu ekrana yazdıracaktır.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fonksiyon_ismi</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">200000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">Salary</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fonksiyon_ismi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/8P3m4G.png"><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sayi_formatla</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">calisan_verileri</span><span class="p">[</span><span class="s2">&quot;Bonus %&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">sayi_formatla</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/SyLiNE.png">
+<p>Aşağıdaki örneklerde ise pandas veri çerçevelerine yeni bir sütun eklemek için işlemler gösterilmiştir. Yeni bir sütun oluşturmak için iki aşama gereklidir:</p>
+<ul class="simple">
+<li><p>Yeni bir sütun oluşturmak ve ona bir ad vermek</p></li>
+<li><p>Yeni sütunun her bir hücresine değer atamak</p></li>
+</ul>
+<p>Bunun için [] operatörü ve atama işlemi = kullanılır. Örneğin, aşağıdaki kod bir veri çerçevesine yeni bir sütun ekleyecek ve içerisine sabit bir “herhangi bir değer” yazdıracaktır:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="p">[</span><span class="s1">&#39;yeni_sutun&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;herhangi bir değer&#39;</span>
+<span class="n">calisan_verileri</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="https://i.vgy.me/aIJrRt.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="p">[</span><span class="s1">&#39;Yeni Sütun&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+    <span class="n">low</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># yeni sütun rassal verilerden oluşturuldu</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Örneğin, aşağıdaki kod “Yeni Sütun” sütunundaki her bir değeri 2 ile çarpacaktır:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="p">[</span><span class="s1">&#39;Yeni Sütun&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calisan_verileri</span><span class="p">[</span><span class="s1">&#39;Yeni Sütun&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Burada, calisan_verileri[‘Yeni Sütun’] * 2 ifadesi, Yeni Sütun sütunundaki her bir değeri 2 ile çarpar ve sonucunu tekrar calisan_verileri[‘Yeni Sütun’] sütununa atar.</p>
+<p>Nüfusu yüksek olan şehirleri bir sütunda tutmak istersek şu şekilde bir kod yazabiliriz.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sehirler</span><span class="p">[</span><span class="s1">&#39;nufusu_yuksek&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sehirler</span><span class="o">.</span><span class="n">nufuslar</span> <span class="o">&gt;</span> <span class="mi">1000000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> fonksiyonu, bir veri çerçevesindeki sütunlara göre sıralama yapmaya yarayan bir fonksiyondur. Bu fonksiyon, veri çerçevesindeki belirli bir sütuna göre verileri küçükten büyüğe veya büyükten küçüğe doğru sıralama yapar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">,</span> <span class="s1">&#39;Bonus %&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/PbNrUl.png"><p><code class="docutils literal notranslate"><span class="pre">rename()</span></code> fonksiyonu, bir veya daha fazla ekseni, satır veya sütun etiketlerini yeniden adlandırmak için kullanılır.</p>
+<p>Fonksiyonun genel kullanımı aşağıdaki gibidir:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calisan_verileri</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;Bonus %&#39;</span><span class="p">:</span> <span class="s1">&#39;Bonus__%&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Team&#39;</span><span class="p">:</span> <span class="s1">&#39;Teams&#39;</span>
+<span class="p">})</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://i.vgy.me/yP7RmV.png"></section>
+</section>
+<section id="veri-secme-ve-verilere-ulasma">
+<h2>Veri Seçme ve Verilere Ulaşma<a class="headerlink" href="#veri-secme-ve-verilere-ulasma" title="Permalink to this headline">#</a></h2>
+<p>Dosya yüklendikten ve veri setini anladıktan sonra, bazı verilere erişmek isteyebiliriz. Pandas, veri seçme, indeksleme ve filtreleme işlemleri için birçok farklı yöntem sunar. Bu yöntemlerin en sık kullanılanları şunlardır:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">İndeksleme</span> <span class="pre">operatörü</span> <span class="pre">([])</span></code> : Bu operatör ile belirli bir sütun ya da satır seçilebilir. Örneğin, veri çerçevesindeki ‘Name’ sütununu seçmek için df[‘Name’] kullanılır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.loc[]</span></code> : Bu metot ile satır ve sütun isimleri veya konumlarına göre seçim yapılabilir. Örneğin, veri çerçevesindeki 3. satırı ve ‘Age’ sütununu seçmek için df.loc[3, ‘Age’] kullanılır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.iloc[]</span></code> : Bu metot ile satır ve sütun konumlarına göre seçim yapılabilir. Örneğin, veri çerçevesindeki 2. satırı ve 3. sütunu seçmek için df.iloc[1, 2] kullanılır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Boolean</span> <span class="pre">indeksleme</span></code> : Bu metot ile belirli koşulları sağlayan satırlar seçilebilir. Örneğin, veri çerçevesindeki yaş değeri 30’dan büyük olan satırların seçimi için df[df[‘Age’] &gt; 30] kullanılır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.query()</span></code> : Bu metot ile belirli koşullara göre satırlar seçilebilir. Örneğin, veri çerçevesindeki yaş değeri 30’dan büyük olan satırların seçimi için df.query(‘Age &gt; 30’) kullanılır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.isin()</span></code> : Bu metot ile belirli bir değere sahip olan satırlar seçilebilir. Örneğin, veri çerçevesindeki ‘Gender’ sütununda ‘Female’ değerine sahip olan satırların seçimi için df[df[‘Gender’].isin([‘Female’])] kullanılır.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.between()</span></code> : Bu metot ile belirli bir aralıkta olan değerlere sahip olan satırlar seçilebilir. Örneğin, veri çerçevesindeki yaş değeri 20 ile 30 arasında olan satırların seçimi için df[df[‘Age’].between(20, 30)] kullanılır.</p></li>
+</ul>
+<p>Bu yöntemlerin her biri, farklı durumlar için kullanışlıdır ve veri çerçevelerinde veri seçimi, indeksleme ve filtreleme işlemlerinin kolay ve esnek bir şekilde yapılmasına olanak tanır.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">calisan_verileri</span><span class="p">[</span><span class="s2">&quot;Team&quot;</span><span class="p">])</span>  <span class="c1"># sadece Team sütununu getirir.</span>
+<span class="n">calisan_verileri</span><span class="p">[[</span><span class="s2">&quot;Team&quot;</span><span class="p">,</span> <span class="s2">&quot;Bonus %&quot;</span><span class="p">]]</span>  <span class="c1"># iki sütunu birlikte getirir</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ayrıca, belli bir koşulu sağlayan satırlara erişmek için de <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> fonksiyonunu kullanabiliriz. Bu fonksiyon, koşulu sağlayan satırları getirir.</p>
+<section id="iloc">
+<h3>iloc<a class="headerlink" href="#iloc" title="Permalink to this headline">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">iloc</span></code> fonksiyonu, verilerin indeks numaralarına göre erişim sağlar. İndeks numarası, satırın konumunu belirtir ve sütun adı belirtilmezse tüm sütunlar döndürülür. Örneğin, aşağıdaki DataFrame nesnesinde, “isim”, “yaş” ve “şehir” sütunlarındaki 1. indeksteki satırlara erişmek istediğimizi varsayalım:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;isim&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ahmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Mehmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Ali&#39;</span><span class="p">,</span> <span class="s1">&#39;Ayşe&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;yaş&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
+    <span class="s1">&#39;şehir&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;İstanbul&#39;</span><span class="p">,</span> <span class="s1">&#39;Ankara&#39;</span><span class="p">,</span> <span class="s1">&#39;İzmir&#39;</span><span class="p">,</span> <span class="s1">&#39;Bursa&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># İlk satırlara erişim</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Sadece bir satır döndürür</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">1</span><span class="p">]])</span>  <span class="c1"># Bir DataFrame nesnesi döndürür</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>  <span class="c1"># İki satırı içeren bir DataFrame nesnesi döndürür</span>
+
+<span class="c1"># İlk satırlara ve belirli sütunlara erişim</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># Sadece bir değer döndürür</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># İki satırı ve ilk iki sütunu içeren bir DataFrame nesnesi döndürür</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loc">
+<h3>loc<a class="headerlink" href="#loc" title="Permalink to this headline">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">loc</span></code> fonksiyonu, satırların etiket veya koşullara göre erişim sağlar. Etiket veya koşul belirtilmezse, tüm satırlar döndürülür. Örneğin, aşağıdaki DataFrame nesnesinde, “isim”, “yaş” ve “şehir” sütunlarındaki “Mehmet” ve “Ali” isimli satırlara erişmek istediğimizi varsayalım:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;isim&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ahmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Mehmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Ali&#39;</span><span class="p">,</span> <span class="s1">&#39;Ayşe&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;yaş&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
+    <span class="s1">&#39;şehir&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;İstanbul&#39;</span><span class="p">,</span> <span class="s1">&#39;Ankara&#39;</span><span class="p">,</span> <span class="s1">&#39;İzmir&#39;</span><span class="p">,</span> <span class="s1">&#39;Bursa&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Etiket veya koşullara göre erişim</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isim&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Mehmet&#39;</span><span class="p">])</span>  <span class="c1"># Bir DataFrame nesnesi döndürür</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isim&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;Mehmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Ali&#39;</span><span class="p">])])</span>  <span class="c1"># İki satırı içeren bir DataFrame nesnesi döndürür</span>
+
+<span class="c1"># Etiket veya koşullara göre erişim ve belirli sütunlar</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isim&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Mehmet&#39;</span><span class="p">,</span> <span class="s1">&#39;yaş&#39;</span><span class="p">])</span>  <span class="c1"># Sadece bir değer döndürür</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isim&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Mehmet&#39;</span><span class="p">,</span> <span class="s1">&#39;Ali&#39;</span><span class="p">]),</span> <span class="p">[</span><span class="s1">&#39;yaş&#39;</span><span class="p">,</span> <span class="s1">&#39;şehir&#39;</span><span class="p">]])</span>  <span class="c1">#</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>df[sütun]: DataFrame’den tek bir sütun veya sütun dizisi seçin; özel durum kolaylıkları: Boolean array (satırları filtreleme), slice (satırları dilimleme) veya Boolean DataFrame (bir kriterle değerleri ayarlama)</p></li>
+<li><p>df.loc[satırlar]: Etiketleme ile DataFrame’den tek bir satır veya alt küme seçin</p></li>
+<li><p>df.loc[:, sütunlar]: Etiketleme ile tek bir sütun veya sütun alt kümesini seçin</p></li>
+<li><p>df.loc[satırlar, sütunlar]: Hem satır(lar) hem de sütun(lar) etiketle seçin</p></li>
+<li><p>df.iloc[satırlar]: DataFrame’den tek bir satır veya satır alt kümesini konumla seçin</p></li>
+<li><p>df.iloc[:, sütunlar]: Tamsayı pozisyonu ile tek bir sütun veya sütun alt kümesini seçin</p></li>
+<li><p>df.iloc[satırlar, sütunlar]: Hem satır(lar) hem de sütun(lar) tamsayı pozisyonu ile seçin</p></li>
+<li><p><a class="reference external" href="http://df.at">df.at</a>[satır, sütun]: Bir satır ve sütun etiketiyle tek bir skaler değeri seçin</p></li>
+<li><p>df.iat[satır, sütun]: Bir satır ve sütun pozisyonu (tamsayılar) ile tek bir skaler değeri seçin</p></li>
+</ul>
+</section>
+</section>
+<section id="sonuc">
+<h2>Sonuç<a class="headerlink" href="#sonuc" title="Permalink to this headline">#</a></h2>
+<p>Bu bölümde, pandas’ın önemli bir araç olmasını sağlayan temel özelliklerini inceledik. Uygulamalı örneklerle kütüphanenin yeteneklerini keşfettik. Seriler ve Veri Çerçeveleri gibi veri nesneleri, int64, float ve object gibi veri tipleri ve veri dönüştürme işlemleri için farklı yöntemler hakkında bilgi sahibi olduk. Daha sonra, veri seçimi ve indeksleme gibi farklı yöntemlerle veri manipülasyonu gerçekleştirdik.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch1-numpy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">NumPy ile Çok Boyutlu Diziler</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ch3-matplotlib.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Görsel Veri Analizine Giriş</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-kutuphanesi">pandas Kütüphanesi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nasil-yuklenir">Nasıl yüklenir?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-kullanim-alanlari">pandas kullanım alanları</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-yapilari">Veri Yapıları</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seriler-series">Seriler (Series)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-cerceveleri-dataframes">Veri Çerçeveleri (DataFrames)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-cercevesi-olusturma-yontemleri">Veri çerçevesi oluşturma yöntemleri</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indeksler-index">Indeksler (Index)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-giris-cikis-islemleri">Veri Giriş / Çıkış İşlemleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verilerin-okunmasi">Verilerin Okunması</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#online-kaynaktan-veri-okunmasi">Online kaynaktan veri okunması</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verilerin-kaydedilmesi">Verilerin Kaydedilmesi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-veri-tipleri">pandas Veri Tipleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veriler-arasindaki-donusumler">Veriler arasındaki dönüşümler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-seti-uzerinde-islemler">Veri Seti Üzerinde İşlemler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksik-veri-islemleri">Eksik veri işlemleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#none-ve-nan-veri-tipleri"><code class="docutils literal notranslate"><span class="pre">None</span></code> ve <code class="docutils literal notranslate"><span class="pre">NaN</span></code> veri tipleri</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isnull-isna-notnull-notna-fonksiyonlari"><code class="docutils literal notranslate"><span class="pre">isnull()</span></code>, <code class="docutils literal notranslate"><span class="pre">isna()</span></code>, <code class="docutils literal notranslate"><span class="pre">notnull()</span></code>, <code class="docutils literal notranslate"><span class="pre">notna()</span></code> fonksiyonları</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fillna"><code class="docutils literal notranslate"><span class="pre">fillna()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropna"><code class="docutils literal notranslate"><span class="pre">dropna()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aykiri-veri-analizi">Aykırı veri analizi</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#iqr-yontemi">IQR yöntemi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#z-skoru-yontemi">Z-Skoru yöntemi</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-donusum-islemleri">Veri dönüşüm işlemleri</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizasyon">Normalizasyon</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#standardizasyon">Standardizasyon</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kesikli-hale-getirme">Kesikli hale getirme</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding">One-hot encoding</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formul-uygulama">Formül Uygulama</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veri-secme-ve-verilere-ulasma">Veri Seçme ve Verilere Ulaşma</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iloc">iloc</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loc">loc</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sonuc">Sonuç</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Caner Erden
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
