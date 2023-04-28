@@ -7,3 +7,4 @@ chapters:
 - file: ch1-numpy
 - file: ch2-pandas
 - file: ch3-matplotlib
+- file: ch4-scikit-learn
