@@ -380,11 +380,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksik-veriler">Eksik veriler</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#olceklendirme">Ölçeklendirme</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minmaxscaler-ile-veri-olceklendirme">MinMaxScaler ile Veri Ölçeklendirme</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aykiri-veri-analizi">Aykırı Veri Analizi</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dogrusal-regresyon">Doğrusal Regresyon</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelin-degerlendirilmesi">Modelin Değerlendirilmesi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Çapraz doğrulama</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahminlerin-karsilastirilmasi">Tahminlerin karşılaştırılması</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sonuc">Sonuç</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kaynaklar">Kaynaklar</a></li>
@@ -620,19 +620,11 @@ Veri setlerine bilgisayardan ulaşma
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 <span class="n">boston</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_boston</span><span class="p">()</span>
 <span class="nb">type</span><span class="p">(</span><span class="n">boston</span><span class="p">)</span>
-<span class="n">sklearn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Bunch</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_6760</span><span class="o">/</span><span class="mf">662709669.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">boston</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_boston</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">type</span><span class="p">(</span><span class="n">boston</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Bunch</span>
-
-<span class="ne">NameError</span>: name &#39;sklearn&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sklearn.utils.Bunch
 </pre></div>
 </div>
 </div>
@@ -642,7 +634,11 @@ Veri setlerine bilgisayardan ulaşma
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">breast_cancer</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_breast_cancer</span><span class="p">()</span>
 <span class="nb">type</span><span class="p">(</span><span class="n">breast_cancer</span><span class="p">)</span>
-<span class="n">sklearn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Bunch</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sklearn.utils.Bunch
 </pre></div>
 </div>
 </div>
@@ -650,11 +646,18 @@ Veri setlerine bilgisayardan ulaşma
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bunch içerisinde hangi anahtarlar var?</span>
-<span class="n">boston</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;feature_names&#39;</span><span class="p">,</span> <span class="s1">&#39;DESCR&#39;</span><span class="p">,</span> <span class="s1">&#39;filename&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
 <span class="c1"># Anahtarların veri yapıları neler?</span>
 <span class="nb">type</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="p">),</span><span class="nb">type</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">target</span><span class="p">),</span><span class="nb">type</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">DESCR</span><span class="p">),</span><span class="nb">type</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;data&#39;, &#39;target&#39;, &#39;feature_names&#39;, &#39;DESCR&#39;, &#39;filename&#39;])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(numpy.ndarray, numpy.ndarray, str, numpy.ndarray)
 </pre></div>
 </div>
 </div>
@@ -686,6 +689,124 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>INDUS</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>B</th>
+      <th>LSTAT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.00632</td>
+      <td>18.0</td>
+      <td>2.31</td>
+      <td>0.0</td>
+      <td>0.538</td>
+      <td>6.575</td>
+      <td>65.2</td>
+      <td>4.0900</td>
+      <td>1.0</td>
+      <td>296.0</td>
+      <td>15.3</td>
+      <td>396.90</td>
+      <td>4.98</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.02731</td>
+      <td>0.0</td>
+      <td>7.07</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>6.421</td>
+      <td>78.9</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>396.90</td>
+      <td>9.14</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.02729</td>
+      <td>0.0</td>
+      <td>7.07</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>7.185</td>
+      <td>61.1</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>392.83</td>
+      <td>4.03</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.03237</td>
+      <td>0.0</td>
+      <td>2.18</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>6.998</td>
+      <td>45.8</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>394.63</td>
+      <td>2.94</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.06905</td>
+      <td>0.0</td>
+      <td>2.18</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>7.147</td>
+      <td>54.2</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>396.90</td>
+      <td>5.33</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -702,13 +823,136 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>INDUS</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>B</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.00632</td>
+      <td>18.0</td>
+      <td>2.31</td>
+      <td>0.0</td>
+      <td>0.538</td>
+      <td>6.575</td>
+      <td>65.2</td>
+      <td>4.0900</td>
+      <td>1.0</td>
+      <td>296.0</td>
+      <td>15.3</td>
+      <td>396.90</td>
+      <td>4.98</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.02731</td>
+      <td>0.0</td>
+      <td>7.07</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>6.421</td>
+      <td>78.9</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>396.90</td>
+      <td>9.14</td>
+      <td>21.6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.02729</td>
+      <td>0.0</td>
+      <td>7.07</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>7.185</td>
+      <td>61.1</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>392.83</td>
+      <td>4.03</td>
+      <td>34.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.03237</td>
+      <td>0.0</td>
+      <td>2.18</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>6.998</td>
+      <td>45.8</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>394.63</td>
+      <td>2.94</td>
+      <td>33.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.06905</td>
+      <td>0.0</td>
+      <td>2.18</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>7.147</td>
+      <td>54.2</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>396.90</td>
+      <td>5.33</td>
+      <td>36.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-<p><img alt="" src="veri_seti_ayir.png" /></p>
 </section>
 </section>
 <section id="veri-onisleme-asamasi">
 <h2>Veri Önişleme Aşaması<a class="headerlink" href="#veri-onisleme-asamasi" title="Permalink to this headline">#</a></h2>
-<p>Tabii, veri önişleme makine öğrenmesinde oldukça önemli bir aşamadır. Veri önişleme, veri setlerini temizleme, düzenleme ve hazırlama sürecidir. Bu süreç, verilerin doğru bir şekilde analiz edilebilmesi ve makine öğrenmesi modellerinin doğru sonuçlar vermesi için gereklidir.</p>
+<p>Veri önişleme makine öğrenmesinde oldukça önemli bir aşamadır. Veri önişleme, veri setlerini temizleme, düzenleme ve hazırlama sürecidir. Bu süreç, verilerin doğru bir şekilde analiz edilebilmesi ve makine öğrenmesi modellerinin doğru sonuçlar vermesi için gereklidir.</p>
 <p>Veri önişleme aşamaları şunları içerebilir:</p>
 <ol class="arabic simple">
 <li><p>Veri toplama: Makine öğrenmesi modeli oluşturmak için uygun verilerin toplanması gereklidir. Bu veriler, çeşitli kaynaklardan gelir ve genellikle büyük miktarda veri içerir.</p></li>
@@ -749,6 +993,25 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRIM       0
+ZN         0
+INDUS      0
+CHAS       0
+NOX        0
+RM         0
+AGE        0
+DIS        0
+RAD        0
+TAX        0
+PTRATIO    0
+B          0
+LSTAT      0
+price      0
+dtype: int64
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -757,6 +1020,181 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>INDUS</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>B</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+      <td>506.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3.613524</td>
+      <td>11.363636</td>
+      <td>11.136779</td>
+      <td>0.069170</td>
+      <td>0.554695</td>
+      <td>6.284634</td>
+      <td>68.574901</td>
+      <td>3.795043</td>
+      <td>9.549407</td>
+      <td>408.237154</td>
+      <td>18.455534</td>
+      <td>356.674032</td>
+      <td>12.653063</td>
+      <td>22.532806</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>8.601545</td>
+      <td>23.322453</td>
+      <td>6.860353</td>
+      <td>0.253994</td>
+      <td>0.115878</td>
+      <td>0.702617</td>
+      <td>28.148861</td>
+      <td>2.105710</td>
+      <td>8.707259</td>
+      <td>168.537116</td>
+      <td>2.164946</td>
+      <td>91.294864</td>
+      <td>7.141062</td>
+      <td>9.197104</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.006320</td>
+      <td>0.000000</td>
+      <td>0.460000</td>
+      <td>0.000000</td>
+      <td>0.385000</td>
+      <td>3.561000</td>
+      <td>2.900000</td>
+      <td>1.129600</td>
+      <td>1.000000</td>
+      <td>187.000000</td>
+      <td>12.600000</td>
+      <td>0.320000</td>
+      <td>1.730000</td>
+      <td>5.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.082045</td>
+      <td>0.000000</td>
+      <td>5.190000</td>
+      <td>0.000000</td>
+      <td>0.449000</td>
+      <td>5.885500</td>
+      <td>45.025000</td>
+      <td>2.100175</td>
+      <td>4.000000</td>
+      <td>279.000000</td>
+      <td>17.400000</td>
+      <td>375.377500</td>
+      <td>6.950000</td>
+      <td>17.025000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.256510</td>
+      <td>0.000000</td>
+      <td>9.690000</td>
+      <td>0.000000</td>
+      <td>0.538000</td>
+      <td>6.208500</td>
+      <td>77.500000</td>
+      <td>3.207450</td>
+      <td>5.000000</td>
+      <td>330.000000</td>
+      <td>19.050000</td>
+      <td>391.440000</td>
+      <td>11.360000</td>
+      <td>21.200000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>3.677083</td>
+      <td>12.500000</td>
+      <td>18.100000</td>
+      <td>0.000000</td>
+      <td>0.624000</td>
+      <td>6.623500</td>
+      <td>94.075000</td>
+      <td>5.188425</td>
+      <td>24.000000</td>
+      <td>666.000000</td>
+      <td>20.200000</td>
+      <td>396.225000</td>
+      <td>16.955000</td>
+      <td>25.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>88.976200</td>
+      <td>100.000000</td>
+      <td>27.740000</td>
+      <td>1.000000</td>
+      <td>0.871000</td>
+      <td>8.780000</td>
+      <td>100.000000</td>
+      <td>12.126500</td>
+      <td>24.000000</td>
+      <td>711.000000</td>
+      <td>22.000000</td>
+      <td>396.900000</td>
+      <td>37.970000</td>
+      <td>50.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="olceklendirme">
@@ -800,29 +1238,73 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
-</div>
-</section>
-<section id="aykiri-veri-analizi">
-<h3>Aykırı Veri Analizi<a class="headerlink" href="#aykiri-veri-analizi" title="Permalink to this headline">#</a></h3>
-<p>Aykırı veriler, veri kümesinde diğer gözlemlerden önemli ölçüde farklı olan nadir verilerdir. Aykırı veriler, veri analizi sonuçlarını ciddi şekilde etkileyebilir ve yanıltıcı sonuçlara yol açabilir.</p>
-<p>Aykırı veri analizi, aykırı verilerin tespit edilmesi, analiz edilmesi ve uygun bir şekilde ele alınması sürecidir. Aykırı veri analizi için bazı yaygın yöntemler şunlardır:</p>
-<ul class="simple">
-<li><p>Box plot: Verilerin dağılımını görselleştirmek için kullanılır. Aykırı veriler, kutunun altında veya üstünde yer alırlar.</p></li>
-<li><p>Z-skoru: Verilerin ortalamasından kaç standart sapma uzakta olduklarını hesaplayan bir istatistik yöntemidir. Z-skoru, belirli bir eşik değerinin üzerinde olan verileri aykırı olarak işaretleyebilir.</p></li>
-<li><p>IQR yöntemi: Interquartile range (IQR) yöntemi, verilerin ortalamadan ayrılmasına dayanır ve verilerin Q1 ve Q3 çeyreklerindeki değerlere göre ölçeklendirilmesini kullanır. Aykırı veriler, Q1 ve Q3’ün birkaç katı dışında olan veriler olarak tanı</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span><span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">})</span>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-7.10352762e-05  0.00000000e+00 -1.68621701e-02  0.00000000e+00
+ -7.92181070e-01 -6.82314620e-01 -2.98661174e-02 -1.02719857e-01
+ -4.34782609e-02 -3.56870229e-01 -1.34042553e+00 -6.38977636e-03
+ -4.77373068e-02]
+[1.12397589e-02 1.00000000e-02 3.66568915e-02 1.00000000e+00
+ 2.05761317e+00 1.91607588e-01 1.02986612e-02 9.09347180e-02
+ 4.34782609e-02 1.90839695e-03 1.06382979e-01 2.53562554e-03
+ 2.75938190e-02]
+[[0.001 0.    0.236 0.    0.13  0.615 0.    0.418 0.087 0.088 0.564 0.971
+  0.086]
+ [0.001 0.    0.42  0.    0.387 0.654 0.907 0.094 0.    0.164 0.894 1.
+  0.108]
+ [0.006 0.    0.21  0.    0.245 0.464 0.671 0.231 0.304 0.229 0.511 0.953
+  0.274]
+ [0.    0.8   0.048 0.    0.    0.511 0.295 0.724 0.    0.103 0.596 0.86
+  0.309]
+ [0.001 0.    1.    0.    0.461 0.464 0.83  0.089 0.13  1.    0.798 1.
+  0.321]]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span><span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/ffff5d1b7130f0116cc4f7feba14bd3ee94b5f305750e0b99eadb1388ff95d19.png" src="_images/ffff5d1b7130f0116cc4f7feba14bd3ee94b5f305750e0b99eadb1388ff95d19.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 506 entries, 0 to 505
+Data columns (total 14 columns):
+ #   Column   Non-Null Count  Dtype  
+---  ------   --------------  -----  
+ 0   CRIM     506 non-null    float64
+ 1   ZN       506 non-null    float64
+ 2   INDUS    506 non-null    float64
+ 3   CHAS     506 non-null    float64
+ 4   NOX      506 non-null    float64
+ 5   RM       506 non-null    float64
+ 6   AGE      506 non-null    float64
+ 7   DIS      506 non-null    float64
+ 8   RAD      506 non-null    float64
+ 9   TAX      506 non-null    float64
+ 10  PTRATIO  506 non-null    float64
+ 11  B        506 non-null    float64
+ 12  LSTAT    506 non-null    float64
+ 13  price    506 non-null    float64
+dtypes: float64(14)
+memory usage: 55.5 KB
 </pre></div>
 </div>
 </div>
@@ -833,6 +1315,11 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((506, 13), (506,))
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -840,10 +1327,20 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((404, 13), (404,))
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span> <span class="c1"># test veri seti</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((102, 13), (102,))
 </pre></div>
 </div>
 </div>
@@ -861,6 +1358,11 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression()
+</pre></div>
+</div>
+</div>
 </div>
 <p>Bu kodlar, doğrusal regresyon modeli oluşturma ve eğitme işlemini gerçekleştirir. İlk olarak, <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code> kütüphanesinden <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> sınıfı çağrılır ve <code class="docutils literal notranslate"><span class="pre">model</span></code> adı verilen bir örnek oluşturulur. Daha sonra, <code class="docutils literal notranslate"><span class="pre">fit()</span></code> fonksiyonu kullanılarak oluşturulan model eğitilir. Bu işlem, <code class="docutils literal notranslate"><span class="pre">X_train_scaled</span></code> ve <code class="docutils literal notranslate"><span class="pre">y_train</span></code> veri setleri üzerinde gerçekleştirilir.</p>
 <p>Ayrıca, doğrusal regresyon modelinin performansını değerlendirmek için <code class="docutils literal notranslate"><span class="pre">sklearn.metrics</span></code> kütüphanesinden <code class="docutils literal notranslate"><span class="pre">r2_score</span></code>, <code class="docutils literal notranslate"><span class="pre">mean_absolute_error</span></code> ve <code class="docutils literal notranslate"><span class="pre">mean_squared_error</span></code> fonksiyonları çağrılır. Bu fonksiyonlar, sırasıyla, R-kare skoru, ortalama mutlak hata ve ortalama karesel hata değerlerini hesaplar. Bu değerler, modelin doğruluğunu değerlendirmek için kullanılabilir.</p>
@@ -870,6 +1372,14 @@ Veri setlerine bilgisayardan ulaşma
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;katsayılar: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kesme terimi: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;katsayı sayısı: &quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>katsayılar:  [ -9.421   4.949   0.774   2.974  -8.379  23.783  -0.556 -14.66    6.019
+  -5.746  -9.308   3.172 -16.17 ]
+kesme terimi:  24.309530869937667
+katsayı sayısı:  (13,)
 </pre></div>
 </div>
 </div>
@@ -900,10 +1410,41 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([24.217, 31.641, 20.588, 22.856, 16.684, 14.317, 26.809, 25.617,
+       32.369, 16.666, 24.377, 16.778, 28.064, 16.162, 20.256, 20.495,
+       20.951, 33.067, 10.946, 17.373, 21.892, 19.969,  8.552, 25.359,
+       32.245, 30.801, 14.852, 27.706, 16.94 , 17.08 , 28.097, 19.534,
+       14.018, 10.163, 14.051, 25.358, 30.418, 19.687, 31.597, 21.768,
+       28.319, 14.314, 29.707, 17.699, 33.596, 28.267, 27.92 , 23.356,
+       17.563,  9.874, 20.834, 19.42 , 18.267, 19.79 , 33.428, 19.927,
+       19.93 , 36.306, 17.491, 37.359, 22.827, 19.233, 13.543, 17.412,
+       14.857, 34.159, 25.847, 36.226, 16.213, 34.577,  8.936, 27.602,
+       21.733, 29.249, 19.118, 32.53 , 31.958, 14.508, 27.029, 14.379,
+       20.339, 11.307, 25.34 , 24.702, 17.094, 17.761, 19.012, 21.203,
+       21.284, 19.444,  5.939, 28.83 , 20.001, 13.202, 21.267, 42.906,
+       20.044, 28.248, 24.296, 30.158, 16.669, 28.498])
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([21.7, 24.8, 20.6, 23. , 19.1, 15. , 22.6, 24.7, 27. , 20.8, 27.5,
+       19.1, 22. , 10.2, 18.3, 21.7, 21.2, 29. , 16.3, 19.9, 19.8, 15. ,
+       23.1, 26.5, 35.4, 31.5, 14.8, 24.8, 23.1, 13.4, 22.8, 18.4, 21.9,
+       17.8, 13.1, 24.2, 29.4, 19.5, 37. , 18.9, 24.5, 11.7, 22.5, 18.6,
+       28.5, 24.3, 25. , 22.4, 20.8, 14.4, 21.5, 22.2, 14.5, 17.7, 36.1,
+       19.3, 19.2, 38.7, 17.4, 33.3, 17. , 19.1, 13.1, 18.1,  9.6, 30.3,
+       19.4, 50. , 17.6, 34.9, 11.8, 26.6, 20.6, 30.1, 12.5, 33.2, 27.9,
+        7.5, 25.2, 19. , 21.8,  6.3, 23.3, 21.9, 14.9, 18.2, 20.6, 50. ,
+       21. , 18.9, 13.8, 28.6, 13.1, 15.6, 19.3, 50. , 21.8, 28.7, 25. ,
+       32.5, 17.3, 24.6])
 </pre></div>
 </div>
 </div>
@@ -921,6 +1462,11 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7586732434392979
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -929,10 +1475,20 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7586732434392979
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_predict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6160762605146681
 </pre></div>
 </div>
 </div>
@@ -946,6 +1502,11 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.962046573144257
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -953,8 +1514,47 @@ Veri setlerine bilgisayardan ulaşma
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24.621906194052666
+</pre></div>
+</div>
+</div>
 </div>
 <p>Diğer metrikler için <a class="reference external" href="https://scikit-learn.org/stable/modules/classes.html#regression-metrics">bu sayfadan</a> daha fazla bilgi alınabilir.</p>
+</section>
+<section id="id1">
+<h2>Çapraz doğrulama<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>Değerlendirme aşamasında bir diğer yaklaşım da çapraz doğrulamadır. Daha önce bahsedildiği gibi veri seti birden fazla eğitim ve test setine ayrılarak bir öğrenme gerçekleştirilir. Farklı sayıda gerçekleştirilen öğrenmelerin ortalaması alınarak daha geçerli sonuçlar üretilmiş olur. Çapraz doğrulama, veri kümesini eğitim ve test kümelerine ayırarak, modelin performansını ölçer ve aynı zamanda modelin genelleme yeteneğini de test eder. Scikit-learn kütüphanesi, çapraz doğrulama yöntemlerini kullanarak makine öğrenimi modellerinin doğruluğunu değerlendirmek için bir dizi araç sunar. Bu araçlar arasında K-Fold çapraz doğrulama, ShuffleSplit, StratifiedKFold ve GroupKFold yer alır.</p>
+<ul class="simple">
+<li><p>K-Fold çapraz doğrulama, veri kümesini k eşit parçaya ayırarak çalışır ve her bir parçayı sırayla test kümesi olarak kullanır. Kalan k-1 parça ise eğitim kümesi olarak kullanılır. Bu işlem, k kez tekrarlanır ve sonuçlar ortalaması alınarak modelin performansı ölçülür. Bu yöntem, bir veri kümesinin tamamının kullanılmasını sağladığı için daha güvenilir sonuçlar verir.</p></li>
+<li></li>
+<li><p>ShuffleSplit yöntemi, veri kümesini belirli sayıda rastgele parçaya ayırır ve bu parçaların her birini test kümesi olarak kullanır. Bu yöntem, K-Fold yöntemine göre daha hızlıdır ve daha büyük veri kümeleri için daha uygun olabilir.</p></li>
+<li></li>
+<li><p>StratifiedKFold yöntemi, sınıflandırma problemleri için kullanılır ve her bir katmanda sınıfların oranlarını korumaya çalışır. Bu yöntem, özellikle dengesiz sınıf dağılımlarına sahip veri kümelerinde daha iyi sonuçlar verir.</p></li>
+<li></li>
+<li><p>GroupKFold yöntemi, veri kümesinde belirli gruplar veya kümeler varsa, bu grupları test ve eğitim kümeleri olarak korumaya çalışır. Örneğin, bir kullanıcının birden fazla örneği varsa, bu örnekler aynı test veya eğitim kümesinde yer almayacak şekilde ayarlanır.</p></li>
+</ul>
+<p>Scikit-learn kütüphanesi, bu yöntemlerin yanı sıra başka çapraz doğrulama yöntemleri de sunar. Bu yöntemler, makine öğrenimi modellerinin performansını doğru bir şekilde değerlendirmek için önemli bir araçtır ve modelin genelleme yeteneğini test etmek için kullanılırlar.</p>
+<p>Scikit-learn kütüphanesi kullanarak K-Fold çapraz doğrulama yöntemini uygulayabiliriz. Örneğin, boston veri kümesindeki çıktıları tahmin etmek için bir karar ağacı sınıflandırıcısı eğitmek istediğimizi varsayalım. Aşağıdaki kod örneği, bu işlemi gerçekleştirecektir:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="c1"># K-Fold çapraz doğrulama yöntemini kullanarak modelin doğruluğunu ölç</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Sonuçları yazdır</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Doğruluk: </span><span class="si">%0.2f</span><span class="s2"> (+/- </span><span class="si">%0.2f</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Doğruluk: 0.35 (+/- 0.75)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Burada <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> fonksiyonu, veri kümesini K-Fold çapraz doğrulama yöntemiyle bölerek modelin doğruluğunu ölçer. Fonksiyon, modelin her bir test seti için doğruluğunu hesaplar ve sonuçları bir dizi olarak döndürür. Daha sonra, bu sonuçların ortalama doğruluğunu ve standart sapmasını hesaplayarak, modelin performansının ne kadar tutarlı olduğunu ölçeriz.</p>
 </section>
 <section id="tahminlerin-karsilastirilmasi">
 <h2>Tahminlerin karşılaştırılması<a class="headerlink" href="#tahminlerin-karsilastirilmasi" title="Permalink to this headline">#</a></h2>
@@ -976,17 +1576,13 @@ Veri setlerine bilgisayardan ulaşma
 <p>Bu metrikler, modelin başarısını objektif bir şekilde değerlendirmemizi sağlar ve geliştirme sürecinde ne yapmamız gerektiği hakkında ipuçları sağlar. Diğer yöntemde ise görsel karşılaştırma, tahminlerin gerçek değerlerle karşılaştırılması için kullanılan bir yöntemdir. Bu yöntemde genellikle çizgi grafikleri veya dağılım grafikleri kullanılır.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> notebook
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;gerçek değerler&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_predict</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;tahmin değerleri&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/66f50ad9b3aedc669d3340208ea36a8a8d2c89666d25c3653842976648619181.png" src="_images/66f50ad9b3aedc669d3340208ea36a8a8d2c89666d25c3653842976648619181.png" />
 </div>
 </div>
 <p>Bu kodlar matplotlib kütüphanesi ile birlikte kullanılarak gerçek ve tahmin edilen değerlerin görselleştirilmesini sağlar.</p>
@@ -1087,11 +1683,11 @@ Veri setlerine bilgisayardan ulaşma
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksik-veriler">Eksik veriler</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#olceklendirme">Ölçeklendirme</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minmaxscaler-ile-veri-olceklendirme">MinMaxScaler ile Veri Ölçeklendirme</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aykiri-veri-analizi">Aykırı Veri Analizi</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dogrusal-regresyon">Doğrusal Regresyon</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelin-degerlendirilmesi">Modelin Değerlendirilmesi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Çapraz doğrulama</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahminlerin-karsilastirilmasi">Tahminlerin karşılaştırılması</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sonuc">Sonuç</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kaynaklar">Kaynaklar</a></li>
